@@ -34,15 +34,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to staging via rsync
-        uses: burnett01/rsync-deployments@7.0.1
+      - name: Deploy to staging via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          switches: -avzr --delete --exclude='.git/' --exclude='.github/' --exclude='*.sql' --exclude='E1ziEw4nqWSKvA7MczOXvBMe924FCbvg/'
-          path: ./
-          remote_path: /srv/www/htdocs/
-          remote_host: vici.softvici.cloud
-          remote_user: root
-          remote_password: ${{ secrets.VPS_STAGING_PASSWORD }}
+          host: vici.softvici.cloud
+          username: root
+          password: ${{ secrets.VPS_STAGING_PASSWORD }}
+          source: ".,!.git,!.github,!*.sql,!E1ziEw4nqWSKvA7MczOXvBMe924FCbvg"
+          target: /srv/www/htdocs
+          rm: false
 
       - name: Verify deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -52,7 +52,6 @@ jobs:
           password: ${{ secrets.VPS_STAGING_PASSWORD }}
           script: |
             echo "✅ Deploy staging completado"
-            echo "📁 Archivos en htdocs: $(ls /srv/www/htdocs | wc -l)"
             echo "🕐 $(date)"
 
   deploy-production:
@@ -62,15 +61,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to production via rsync
-        uses: burnett01/rsync-deployments@7.0.1
+      - name: Deploy to production via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          switches: -avzr --delete --exclude='.git/' --exclude='.github/' --exclude='*.sql' --exclude='E1ziEw4nqWSKvA7MczOXvBMe924FCbvg/'
-          path: ./
-          remote_path: /srv/www/htdocs/
-          remote_host: ${{ secrets.VPS_PROD_HOST }}
-          remote_user: root
-          remote_password: ${{ secrets.VPS_PROD_PASSWORD }}
+          host: ${{ secrets.VPS_PROD_HOST }}
+          username: root
+          password: ${{ secrets.VPS_PROD_PASSWORD }}
+          source: ".,!.git,!.github,!*.sql,!E1ziEw4nqWSKvA7MczOXvBMe924FCbvg"
+          target: /srv/www/htdocs
+          rm: false
 
       - name: Verify deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -80,5 +79,4 @@ jobs:
           password: ${{ secrets.VPS_PROD_PASSWORD }}
           script: |
             echo "✅ Deploy producción completado"
-            echo "📁 Archivos en htdocs: $(ls /srv/www/htdocs | wc -l)"
             echo "🕐 $(date)"
