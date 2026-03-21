@@ -1,57 +1,407 @@
-input.red_btn{
-   font-family: Arial, Sans-Serif;
-   font-size: 10px;
-   color:#FFFFFF;
-   font-weight:bold;
-   background-color:#990000;
-   border:2px solid;
-   border-top-color:#FFCCCC;
-   border-left-color:#FFCCCC;
-   border-right-color:#330000;
-   border-bottom-color:#330000;
+/* =============================================================================
+   VICIDIAL-FIVE — Corporate Light Theme
+   Target: agc/vicidial.php — ZONA AMARILLA
+   Rule: ADD only, never remove existing selectors
+   ============================================================================= */
+
+/* --- Design tokens --------------------------------------------------------- */
+:root {
+  --color-primary:       #1E3A5F;
+  --color-primary-light: #2B5C96;
+  --color-surface:       #FFFFFF;
+  --color-bg:            #F1F4F8;
+  --color-bg-subtle:     #E8ECF1;
+  --color-border:        #D0D7E2;
+  --color-border-strong: #B0BAC9;
+  --color-text:          #0F1C2E;
+  --color-text-muted:    #4A5770;
+  --color-text-light:    #6B7A95;
+  --color-success:       #14532D;
+  --color-success-bg:    #DCFCE7;
+  --color-danger:        #7F1D1D;
+  --color-danger-bg:     #FEE2E2;
+  --color-warning:       #78350F;
+  --color-warning-bg:    #FEF3C7;
+  --color-accent:        #1D4ED8;
+  --font-base:           -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+  --radius:              4px;
+  --shadow-sm:           0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:           0 2px 8px rgba(0,0,0,.10);
 }
-input.green_btn{
-   font-family: Arial, Sans-Serif;
-   font-size: 10px;
-   color:#FFFFFF;
-   font-weight:bold;
-   background-color:#009900;
-   border:2px solid;
-   border-top-color:#CCFFCC;
-   border-left-color:#CCFFCC;
-   border-right-color:#003300;
-   border-bottom-color:#003300;
+
+/* --- Global reset ---------------------------------------------------------- */
+body {
+  background: var(--color-bg) !important;
+  font-family: var(--font-base) !important;
+  color: var(--color-text);
 }
-input.blue_btn{
-   font-family: Arial, Sans-Serif;
-   font-size: 10px;
-   color:#FFFFFF;
-   font-weight:bold;
-   background-color:#000099;
-   border:2px solid;
-   border-top-color:#CCCCFF;
-   border-left-color:#CCCCFF;
-   border-right-color:#000033;
-   border-bottom-color:#000033;
+
+/* --- Typography classes (style.css overrides) ------------------------------ */
+.body_text, .body_small, .body_small_bold,
+.body_tiny, .sb_text, .sk_text, .skb_text,
+.sh_text, .sh_text_white, .sd_text, .log_text,
+.log_title, .cust_form, .cust_form_text {
+  font-family: var(--font-base) !important;
 }
-input.form_field {
-    font-family: Arial, Sans-Serif;
-    font-size: 10px;
-    margin-bottom: 3px;
-    padding: 2px;
-    border: solid 1px #000066;
+
+.body_text      { font-size: 12px; color: var(--color-text); }
+.body_small     { font-size: 11px; color: var(--color-text); }
+.body_small_bold{ font-size: 11px; color: var(--color-text); font-weight: 600; }
+.body_tiny      { font-size: 10px; color: var(--color-text-muted); }
+.sb_text        { font-size: 11px; color: var(--color-text); }
+.sk_text        { font-size: 11px; color: var(--color-text-muted); }
+.skb_text       { font-size: 12px; color: var(--color-text); font-weight: 600; }
+.sh_text        { font-size: 13px; color: var(--color-text); font-weight: 600; }
+.sh_text_white  { font-size: 13px; color: #FFFFFF; font-weight: 600; }
+.log_text       { font-size: 11px; color: var(--color-text-muted); }
+.log_title      { font-size: 12px; color: var(--color-text); font-weight: 600; }
+
+/* --- Main panels (override PHP inline bgcolor attributes) ------------------ */
+#MainPanel,
+#MainPanel table,
+#MainTable {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
-textarea.form_field {
-    font-family: Arial, Sans-Serif;
-    font-size: 10px;
-    margin-bottom: 3px;
-    padding: 2px;
-    border: solid 1px #000066;
+
+#ScriptPanel,
+#Script2Panel,
+#ScriptPanel table,
+#Script2Panel table {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
 }
-select.form_field {
-    font-family: Arial, Sans-Serif;
-    font-size: 10px;
-    margin-bottom: 3px;
-    padding: 2px;
-    border: solid 1px #000066;
-} 
+
+#FormPanel,
+#FormPanel table,
+#EmailPanel,
+#CustomerChatPanel,
+#InternalChatPanel {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+}
+
+#AgentViewSpan {
+  background-color: var(--color-bg-subtle) !important;
+  border-left: 1px solid var(--color-border);
+}
+
+#MaiNfooter,
+#MaiNfooterspan {
+  background-color: var(--color-bg-subtle) !important;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+#BannerPanel {
+  background-color: var(--color-primary) !important;
+  color: #FFFFFF;
+}
+
+/* --- Tabs bar -------------------------------------------------------------- */
+#Tabs table {
+  background-color: var(--color-primary) !important;
+  border-bottom: 2px solid var(--color-border-strong);
+}
+
+#Tabs td {
+  border-right: 1px solid rgba(255,255,255,.15) !important;
+}
+
+/* Tab images: desaturate the stock GIFs, apply brand color tint */
+#Tabs td a img {
+  filter: brightness(0) invert(1) !important;
+  opacity: 0.85;
+}
+
+#Tabs td a:hover img {
+  opacity: 1;
+}
+
+#Tabs td a {
+  display: block;
+  background-color: transparent;
+  transition: background-color .15s;
+}
+
+#Tabs td a:hover {
+  background-color: rgba(255,255,255,.12);
+}
+
+/* Main logo tab */
+#Tabs td:first-child {
+  background-color: var(--color-primary) !important;
+}
+
+/* WhatsApp + CRM anchor tabs (keep brand colors, polish them) */
+#Tabs td[style*="25D366"] a,
+#Tabs td[style*="25D366"] {
+  background-color: #128C4A !important;
+}
+#Tabs td[style*="0057B7"] a,
+#Tabs td[style*="0057B7"] {
+  background-color: #0D47A1 !important;
+}
+
+/* Status / session info cell at end of tabs */
+#Tabs td #status {
+  color: #3BDE7C;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .5px;
+}
+
+/* --- Control button spans (Dial, Hangup, Record, etc.) -------------------- */
+#DiaLControl,
+#DiaLControl input {
+  background-color: var(--color-success-bg) !important;
+}
+
+#HangupControl,
+#HangupControl input {
+  background-color: var(--color-danger-bg) !important;
+}
+
+#RecorDControl,
+#ParkControl,
+#ivrParkControl,
+#XferControl,
+#QuickXfer,
+#CustomXfer,
+#SendDTMF,
+#RecorDMute {
+  background-color: var(--color-bg-subtle) !important;
+}
+
+/* --- Buttons --------------------------------------------------------------- */
+input.red_btn,
+input.tiny_red_btn {
+  font-family: var(--font-base) !important;
+  font-size: 10px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: #B91C1C !important;
+  border: 1px solid #991B1B !important;
+  border-radius: var(--radius);
+  padding: 3px 8px;
+  cursor: pointer;
+  letter-spacing: .2px;
+}
+
+input.green_btn,
+input.tiny_green_btn {
+  font-family: var(--font-base) !important;
+  font-size: 10px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: #15803D !important;
+  border: 1px solid #166534 !important;
+  border-radius: var(--radius);
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+input.blue_btn,
+input.tiny_blue_btn {
+  font-family: var(--font-base) !important;
+  font-size: 10px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: #1D4ED8 !important;
+  border: 1px solid #1E40AF !important;
+  border-radius: var(--radius);
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+input.tiny_yellow_btn {
+  font-family: var(--font-base) !important;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text);
+  background-color: #FCD34D !important;
+  border: 1px solid #D97706 !important;
+  border-radius: var(--radius);
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+input[type="button"],
+input[type="submit"] {
+  font-family: var(--font-base) !important;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* --- Form fields ----------------------------------------------------------- */
+input.form_field,
+textarea.form_field,
+select.form_field,
+textarea.chat_box {
+  font-family: var(--font-base) !important;
+  font-size: 11px;
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius);
+  padding: 3px 6px;
+  color: var(--color-text);
+  transition: border-color .15s;
+  outline: none;
+}
+
+input.form_field:focus,
+textarea.form_field:focus,
+select.form_field:focus {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 2px rgba(29,78,216,.12);
+}
+
+.cust_form input,
+.cust_form select,
+.cust_form textarea,
+.cust_form_text {
+  font-family: var(--font-base) !important;
+  font-size: 11px;
+  color: var(--color-text);
+}
+
+/* --- Scroll containers ----------------------------------------------------- */
+.noscroll_script,
+.noscroll_form {
+  background-color: var(--color-surface) !important;
+  font-family: var(--font-base) !important;
+  font-size: 12px;
+  color: var(--color-text);
+  padding: 8px;
+}
+
+.scroll_calllog,
+.scroll_callback {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius);
+}
+
+div.scrolling,
+div.scrolling_transcript,
+div.scrolling_chat_display {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius);
+  background-color: var(--color-surface) !important;
+}
+
+/* --- Tables (override default grey/blue bgcolor attributes) ---------------- */
+table[bgcolor="#CCCCCC"],
+table[bgcolor="#cccccc"] {
+  background-color: var(--color-surface) !important;
+}
+
+table[bgcolor="#D9E6FE"],
+table[bgcolor="#d9e6fe"],
+td[bgcolor="#D9E6FE"],
+td[bgcolor="#d9e6fe"] {
+  background-color: var(--color-bg-subtle) !important;
+}
+
+table[bgcolor="#9BB9FB"] td,
+td[bgcolor="#9BB9FB"] {
+  background-color: var(--color-bg) !important;
+}
+
+table[bgcolor="#B9CBFD"] td,
+td[bgcolor="#B9CBFD"] {
+  background-color: var(--color-bg-subtle) !important;
+}
+
+/* Header/menu rows */
+td[bgcolor="#015B91"],
+td[bgcolor="#015b91"],
+table[bgcolor="#015B91"] {
+  background-color: var(--color-primary) !important;
+  color: #FFFFFF;
+}
+
+/* --- Status indicators ----------------------------------------------------- */
+#MainStatuSSpan {
+  font-family: var(--font-base);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+#AgentTimeSpan,
+#AgentStatusSpan,
+#AgentAlertSpan,
+#AgentStatusCalls,
+#AgentStatusEmails {
+  font-family: var(--font-base);
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+#PauseCodeLinkSpan a,
+#CallLogLinkSpan a,
+#AgentViewLink a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: 10px;
+}
+
+#PauseCodeLinkSpan a:hover,
+#CallLogLinkSpan a:hover,
+#AgentViewLink a:hover {
+  text-decoration: underline;
+}
+
+/* --- Preview / queue text -------------------------------------------------- */
+.preview_text     { background: var(--color-success-bg); color: var(--color-success); }
+.preview_text_red { background: var(--color-danger-bg);  color: var(--color-danger);  }
+.queue_text_red   { color: var(--color-danger); }
+.queue_text       { color: var(--color-text); }
+
+.ON_conf  { background: #FEF9C3; color: var(--color-warning); font-family: var(--font-base); }
+.OFF_conf { background: #FEF3C7; color: var(--color-text-muted); font-family: var(--font-base); }
+
+/* --- Transfer panel -------------------------------------------------------- */
+#TransferMain,
+#TransferMaindiv {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* --- Loading text ---------------------------------------------------------- */
+.loading_text {
+  font-family: var(--font-base) !important;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* --- button_active / button_inactive (vicidial_stylesheet.css overrides) --- */
+.button_active {
+  background-color: #15803D !important;
+  border-color: #166534 !important;
+  border-radius: var(--radius);
+  font-family: var(--font-base) !important;
+  font-size: 12px;
+  padding: 6px 16px;
+}
+
+.button_inactive {
+  background-color: #6B7280 !important;
+  border-color: #4B5563 !important;
+  border-radius: var(--radius);
+  font-family: var(--font-base) !important;
+  font-size: 12px;
+  padding: 6px 16px;
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* --- Scrollbar (webkit) ---------------------------------------------------- */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--color-bg); }
+::-webkit-scrollbar-thumb  { background: var(--color-border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-light); }
