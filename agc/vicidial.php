@@ -23991,6 +23991,9 @@ $zi=2;
     <tr valign="top" align="left">
     <td align="left" width="115px" bgcolor="#<?php echo $SSstd_row5_background ?>"><a href="#" onclick="MainPanelToFront('NO','YES');"><img src="<?php echo $selected_logo ?>" alt="MAIN" width="115px" height="30px" border="0" /></a></td>
     <td align="left" width="67px"><a href="#" onclick="ScriptPanelToFront('YES');"><img src="./images/<?php echo _QXZ("vdc_tab_script.gif"); ?>" alt="SCRIPT" width="67px" height="30px" border="0" /></a></td>
+    <?php /* VICIDIAL-FIVE: external tool anchors — replace href with real URLs */ ?>
+    <td align="left" width="67px" style="background-color:#25D366;"><a href="#whatsapp" target="_blank" style="display:block;width:67px;height:30px;line-height:30px;text-align:center;color:#FFFFFF;font-family:Arial,sans-serif;font-size:10px;font-weight:bold;text-decoration:none;">WhatsApp</a></td>
+    <td align="left" width="67px" style="background-color:#0057B7;"><a href="#crm" target="_blank" style="display:block;width:67px;height:30px;line-height:30px;text-align:center;color:#FFFFFF;font-family:Arial,sans-serif;font-size:10px;font-weight:bold;text-decoration:none;">CRM</a></td>
 	<?php if ($SSenable_second_script > 0)
     {echo "<td align=\"left\" width=\"67px\"><a href=\"#\" onclick=\"ScriptPanel2ToFront('YES');\"><img src=\"./images/"._QXZ("vdc_tab_script2.gif")."\" alt=\"SCRIPT 2\" width=\"67px\" height=\"30px\" border=\"0\" /></a></td>\n";}
 	?>
