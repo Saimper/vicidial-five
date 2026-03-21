@@ -1,15 +1,14 @@
 /* =============================================================================
-   VICIDIAL-FIVE — Enterprise Command UI
-   Theme: Dark Control Sidebar / Clean Light Content
-   Version: 6.0
+   VICIDIAL-FIVE — Professional Light UI
+   Version: 7.0 — Light Sidebar, Coherent Design System, Responsive
    =============================================================================
    SAFETY RULES:
-   • No borders/padding added to absolutely-positioned containers
-   • No table[bgcolor] attribute selectors (breaks layout tables)
-   • No img filters on tab GIFs
-   • Left sidebar: target #MainTable td[width="150px"] — safe, only left column
-   • Button spans: display:flex + ::after label + img hidden + <a> absolute overlay
-   • JS setters on background-color overridden intentionally (status via #MainStatuSSpan)
+   • No borders/padding on absolutely-positioned containers (#Header, #Tabs,
+     #MainPanel, #MainTable outer td) — dimensions are JS-calculated
+   • Left sidebar target: #MainTable td[width="150px"] — ONLY safe selector
+   • GIF images: hidden with opacity:0 + 0×0, JS references preserved
+   • RE-QUEUE (#ReQueueCall) hidden — not in agent workflow
+   • JS writes style.backgroundColor inline — we use !important selectively
    ============================================================================= */
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -23,141 +22,179 @@
 :root {
   --font: 'Inter', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
 
-  /* ── Sidebar (left control panel) ── */
-  --sb:           #18243A;   /* sidebar background */
-  --sb-2:         #1F2E47;   /* sidebar hover / active row */
-  --sb-text:      #CBD8EA;   /* sidebar primary text */
-  --sb-muted:     #7A8EA8;   /* sidebar muted labels */
-  --sb-divider:   rgba(255,255,255,.07);
+  /* ── Sidebar (light) ── */
+  --sb-bg:        #F2F5F9;
+  --sb-border:    #DDE3ED;
+  --sb-label:     #5A6B80;
+  --sb-info-bg:   #E8EDF5;
+  --sb-info-text: #3B4E63;
 
   /* ── Header ── */
-  --hd:           #0F1A2B;
-  --hd-text:      #E0EAFF;
+  --hd-bg:        #1A2840;
+  --hd-text:      #D6E4F7;
   --hd-link:      #60A5FA;
 
-  /* ── Tabs ── */
-  --tabs-bg:      #E4EBF3;
-  --tabs-border:  #A8B6C8;
+  /* ── Tabs bar ── */
+  --tabs-bg:      #FFFFFF;
+  --tabs-border:  #CDD5E0;
 
   /* ── Content surfaces ── */
   --surface:      #FFFFFF;
-  --bg:           #EDF1F7;
-  --bg-alt:       #E2E8F2;
+  --bg:           #F5F7FA;
+  --bg-alt:       #EBF0F7;
 
   /* ── Borders ── */
   --bd:           #CDD5DF;
-  --bd-dark:      #A3B0C0;
+  --bd-focus:     #3B82F6;
 
-  /* ── Focus ── */
-  --focus:        #2563EB;
-  --focus-ring:   rgba(37,99,235,.2);
+  /* ── Focus ring ── */
+  --focus-ring:   rgba(59,130,246,.18);
 
   /* ── Text ── */
   --tx:           #0F1C2E;
   --tx-muted:     #4A5A6E;
-  --tx-light:     #6B7D93;
+  --tx-light:     #768A9E;
+
+  /* ── Semantic ── */
+  --green:        #047857;
+  --green-bg:     #ECFDF5;
+  --green-bd:     #6EE7B7;
+  --red:          #B91C1C;
+  --red-bg:       #FEF2F2;
+  --red-bd:       #FECACA;
+  --amber:        #92400E;
+  --amber-bg:     #FFFBEB;
+  --amber-bd:     #FCD34D;
+  --blue:         #1D4ED8;
+  --blue-bg:      #EFF6FF;
+  --blue-bd:      #BFDBFE;
 
   /* ── Button palette ── */
-  --btn-dial:     #1D5BD7;   /* primary action — vivid blue */
+  --btn-dial:     #1D5BD7;
   --btn-dial-h:   #1749B4;
-  --btn-hangup:   #C41E1E;   /* danger — deep red */
+  --btn-hangup:   #C41E1E;
   --btn-hangup-h: #A01818;
-  --btn-record:   #0A7C52;   /* record — deep green */
-  --btn-record-h: #085E3E;
-  --btn-park:     #B75D00;   /* hold — dark amber */
-  --btn-park-h:   #954C00;
-  --btn-xfer:     #5B21B6;   /* transfer — purple */
+  --btn-record:   #0A7C52;
+  --btn-record-h: #075E3E;
+  --btn-park:     #C05621;
+  --btn-park-h:   #9C4318;
+  --btn-xfer:     #5B21B6;
   --btn-xfer-h:   #4C1D95;
-  --btn-web:      #0369A1;   /* web forms — deep sky */
+  --btn-web:      #0369A1;
   --btn-web-h:    #025785;
-  --btn-neutral:  #334155;   /* utility — dark slate */
-  --btn-neutral-h:#1E293B;
+  --btn-neutral:  #3D4F63;
+  --btn-neutral-h:#2D3C4E;
 
-  /* ── Semantic (for content area) ── */
-  --green:      #047857; --green-bg: #ECFDF5; --green-bd: #6EE7B7;
-  --red:        #B91C1C; --red-bg:   #FEF2F2; --red-bd:   #FECACA;
-  --amber:      #B45309; --amber-bg: #FFFBEB; --amber-bd: #FDE68A;
-  --blue:       #1D4ED8; --blue-bg:  #EFF6FF; --blue-bd:  #BFDBFE;
+  /* ── Radius ── */
+  --r:    5px;
+  --r-sm: 3px;
+  --r-lg: 8px;
 
-  --r:    6px;
-  --r-s:  4px;
-  --r-lg: 10px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
-  --shadow-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+  /* ── Shadows ── */
+  --sh-xs: 0 1px 2px rgba(0,0,0,.06);
+  --sh-sm: 0 1px 4px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --sh-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+
+  /* ── Button dimensions ── */
+  --btn-h:   28px;
+  --btn-w:   136px;
+  --btn-fs:  11px;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   2. GLOBAL RESET
+   2. GLOBAL BASE
    ══════════════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
   font-family: var(--font) !important;
   background:  var(--bg) !important;
-  color:       var(--tx);
+  color:       var(--tx) !important;
+  margin:      0 !important;
+  padding:     0 !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   3. HEADER BAR  (top:0px — "Logged in as… LOGOUT")
-   CRITICAL: Never add padding/border here. Tabs start at top:13px.
+   3. HEADER BAR  (position:absolute top:0)
+   NEVER add padding or border — Tabs sit at top:13px.
    ══════════════════════════════════════════════════════════════════════ */
 #Header table {
-  background-color: var(--hd) !important;
+  background-color: var(--hd-bg) !important;
 }
 #Header font,
 #Header .queue_text,
-#Header .body_text {
+#Header .body_text,
+#Header .body_tiny {
   color:       var(--hd-text) !important;
   font-family: var(--font) !important;
-  font-size:   11px;
+  font-size:   11px !important;
 }
-#Header a               { color: var(--hd-link) !important; font-weight: 600;
-                          text-decoration: none; letter-spacing: .2px; }
-#Header a:hover         { color: #FFFFFF !important; text-decoration: underline; }
+#Header a {
+  color:           var(--hd-link) !important;
+  font-weight:     600;
+  text-decoration: none;
+  font-family:     var(--font) !important;
+}
+#Header a:hover { color: #FFFFFF !important; text-decoration: underline; }
 
 /* ══════════════════════════════════════════════════════════════════════
-   4. TABS ROW  (top:13px, height:30px)
-   Light bg — GIF images are designed for light backgrounds.
+   4. TABS ROW  (position:absolute top:13px height:30px)
+   GIF images require light background — keep white.
    ══════════════════════════════════════════════════════════════════════ */
 #Tabs > table {
   background-color: var(--tabs-bg) !important;
-  border-bottom: 2px solid var(--tabs-border) !important;
+  border-bottom:    1px solid var(--tabs-border) !important;
 }
-#Tabs td[style*="25D366"] { background-color: #166534 !important; }
+
+/* WhatsApp and CRM injected tabs */
+#Tabs td[style*="25D366"] { background-color: #15803D !important; }
 #Tabs td[style*="0057B7"] { background-color: #1D4ED8 !important; }
 
-#Tabs span#status         { color: var(--green) !important; font-weight: 700;
-                            font-size: 10px; font-family: var(--font) !important; }
 #Tabs .body_tiny,
-#Tabs .body_text          { color: var(--tx-muted) !important;
-                            font-family: var(--font) !important; }
-
-/* ══════════════════════════════════════════════════════════════════════
-   5. MAIN PANEL  (top:46px — 3-column table)
-   ══════════════════════════════════════════════════════════════════════ */
-#MainTable { background-color: var(--surface) !important; }
-
-/* Status bar row (colspan=3, sits above the 3-column layout) */
-#MainStatuSSpan {
-  font-family:    var(--font) !important;
-  font-size:      12px !important;
-  font-weight:    700 !important;
-  letter-spacing: .6px;
-  text-transform: uppercase;
+#Tabs .body_text,
+#Tabs font {
+  color:       var(--tx-muted) !important;
+  font-family: var(--font) !important;
+  font-size:   11px !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   6. DARK SIDEBAR — Left control column
-   Targets: #MainTable td[width="150px"]
-   Safe selector — only matches the 150px left column in the main 3-col row.
+   5. MAIN TABLE STRUCTURE
+   ══════════════════════════════════════════════════════════════════════ */
+#MainTable {
+  background-color: var(--surface) !important;
+}
+
+/* Status row (colspan=3, above 3-col layout) */
+#MainStatuSSpan {
+  display:        block !important;
+  padding:        5px 10px !important;
+  font-family:    var(--font) !important;
+  font-size:      11px !important;
+  font-weight:    700 !important;
+  letter-spacing: .5px !important;
+  text-transform: uppercase !important;
+  border-bottom:  1px solid var(--bd) !important;
+  background:     var(--bg-alt) !important;
+  color:          var(--tx-muted) !important;
+}
+#MainStatuSSpan font {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  font-weight: 700 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   6. SIDEBAR — Left control column (150px wide, light design)
    ══════════════════════════════════════════════════════════════════════ */
 #MainTable td[width="150px"] {
-  background-color: var(--sb) !important;
-  padding:          10px 8px 14px !important;
+  background-color: var(--sb-bg) !important;
+  border-right:     1px solid var(--sb-border) !important;
+  padding:          8px 7px 12px !important;
   vertical-align:   top !important;
 }
 
-/* All text elements inside the sidebar → light colored */
+/* All text nodes inside sidebar */
 #MainTable td[width="150px"] font,
 #MainTable td[width="150px"] .body_text,
 #MainTable td[width="150px"] .body_tiny,
@@ -165,103 +202,233 @@ body {
 #MainTable td[width="150px"] .body_small_bold,
 #MainTable td[width="150px"] .skb_text,
 #MainTable td[width="150px"] .sk_text {
-  color: var(--sb-muted) !important;
+  color:       var(--sb-label) !important;
   font-family: var(--font) !important;
-  font-size: 10px !important;
+  font-size:   10px !important;
 }
 
-/* Specific label displays */
-#RecorDingFilename        { color: var(--sb-text) !important; font-size: 9px !important;
-                            font-family: var(--font) !important; font-weight: 500; }
-#RecorDID                 { color: var(--sb-text) !important; font-size: 9px !important;
-                            font-family: var(--font) !important; }
-#ParkCounterSpan          { color: var(--sb-text) !important; font-family: var(--font) !important;
-                            font-size: 10px !important; font-weight: 600; }
-#NexTCalLPausE a          { color: var(--hd-link) !important; font-size: 10px !important;
-                            font-family: var(--font) !important; }
-#NexTCalLPausE a:hover    { color: #FFFFFF !important; }
+/* ── YOU ARE PAUSED banner ── */
+#NexTCalLPausE {
+  display:          flex !important;
+  align-items:      center !important;
+  justify-content:  center !important;
+  width:            var(--btn-w) !important;
+  min-height:       26px !important;
+  background:       var(--amber-bg) !important;
+  border:           1px solid var(--amber-bd) !important;
+  border-radius:    var(--r) !important;
+  padding:          4px 8px !important;
+  margin:           0 auto 5px !important;
+  box-sizing:       border-box !important;
+  text-align:       center !important;
+}
+#NexTCalLPausE font,
+#NexTCalLPausE .body_small,
+#NexTCalLPausE .body_text {
+  font-family:  var(--font) !important;
+  font-size:    10px !important;
+  font-weight:  700 !important;
+  color:        var(--amber) !important;
+  text-transform: uppercase !important;
+  letter-spacing: .4px !important;
+}
+#NexTCalLPausE a {
+  color:           var(--amber) !important;
+  font-size:       10px !important;
+  font-weight:     700 !important;
+  text-decoration: none !important;
+  text-transform:  uppercase !important;
+}
+#NexTCalLPausE a:hover { text-decoration: underline !important; }
 
-/* Lead Preview + Alt Phone checkboxes — subtle dark style */
+/* Lead Preview checkbox row */
+#DiaLLeaDPrevieW,
+#DiaLDiaLAltPhonE {
+  display:     flex !important;
+  align-items: center !important;
+  gap:         5px !important;
+  padding:     2px 4px !important;
+  margin:      1px auto !important;
+  width:       var(--btn-w) !important;
+}
 #DiaLLeaDPrevieW .preview_text,
 #DiaLLeaDPrevieW font,
 #DiaLDiaLAltPhonE .preview_text,
 #DiaLDiaLAltPhonE font {
-  background:  rgba(255,255,255,.06) !important;
-  color:       var(--sb-text) !important;
-  font-family: var(--font) !important;
-  font-size:   10px !important;
-  border-radius: var(--r-s) !important;
+  background:    transparent !important;
+  color:         var(--sb-label) !important;
+  font-family:   var(--font) !important;
+  font-size:     10px !important;
+  font-weight:   500 !important;
+  border-radius: 0 !important;
 }
 
-/* Spacer spans in sidebar — hide, we rely on button gap instead */
+/* Recording file info badge */
+#RecorDingFilename {
+  display:      block !important;
+  font-family:  var(--font) !important;
+  font-size:    9px !important;
+  color:        var(--sb-info-text) !important;
+  word-break:   break-all !important;
+  line-height:  1.4 !important;
+  padding:      2px 6px !important;
+  background:   var(--sb-info-bg) !important;
+  border-radius: var(--r-sm) !important;
+  width:        var(--btn-w) !important;
+  box-sizing:   border-box !important;
+  margin:       1px auto 2px !important;
+}
+
+/* Record ID info badge */
+#RecorDID {
+  display:      block !important;
+  font-family:  var(--font) !important;
+  font-size:    9px !important;
+  color:        var(--sb-info-text) !important;
+  word-break:   break-all !important;
+  line-height:  1.4 !important;
+  padding:      2px 6px !important;
+  background:   var(--sb-info-bg) !important;
+  border-radius: var(--r-sm) !important;
+  width:        var(--btn-w) !important;
+  box-sizing:   border-box !important;
+  margin:       1px auto 4px !important;
+}
+
+/* Park counter */
+#ParkCounterSpan {
+  font-family: var(--font) !important;
+  font-size:   10px !important;
+  font-weight: 600 !important;
+  color:       var(--btn-park) !important;
+}
+
+/* Mute indicator */
+#RecorDMute {
+  display:         inline-flex !important;
+  align-items:     center !important;
+  justify-content: center !important;
+  min-width:       80px !important;
+  height:          20px !important;
+  border-radius:   var(--r-sm) !important;
+  font-family:     var(--font) !important;
+  font-size:       9px !important;
+  font-weight:     700 !important;
+  text-transform:  uppercase !important;
+  color:           var(--sb-label) !important;
+  background:      var(--sb-info-bg) !important;
+  border:          1px solid var(--sb-border) !important;
+  margin:          2px auto !important;
+}
+
+/* Spacer spans — hidden, rely on margin/gap */
 #SpacerSpanA,
 #SpacerSpanC,
 #SpacerSpanD { display: none !important; }
 
-/* RecorDMute — populated by JS, let it show normally on dark bg */
-#RecorDMute { color: var(--sb-text) !important; }
+/* RE-QUEUE — not in agent workflow, hidden */
+#ReQueueCall { display: none !important; }
 
 /* ══════════════════════════════════════════════════════════════════════
-   7. CONTROL BUTTONS — GIF → CSS flat pill buttons on dark sidebar
-   ─────────────────────────────────────────────────────────────────────
+   7. SIDEBAR BUTTONS — GIF → CSS flat buttons
    Technique:
-     1. Span → flex container (visual button)
-     2. All <img> inside → opacity:0; 0×0 (invisible, stays in DOM for JS)
-     3. Span ::after → label text
-     4. <a> inside (JS may add/remove) → position:absolute overlay for clicks
+     1. Span → flex container with defined dimensions
+     2. All <img> → opacity:0; 0×0 (invisible, stays for JS)
+     3. Span ::after → static label text
+     4. <a> inside → position:absolute overlay for clicks
    ══════════════════════════════════════════════════════════════════════ */
 
-/* ── Shared button container ── */
-#DiaLControl, #HangupControl, #RecorDControl,
-#ParkControl, #ivrParkControl, #XferControl,
-#QuickXfer, #CustomXfer,
-#WebFormSpan, #WebFormSpanTwo, #WebFormSpanThree,
-#ReQueueCall {
-  display:          flex !important;
-  align-items:      center !important;
-  justify-content:  center !important;
-  width:            138px !important;
-  height:           30px !important;
-  border-radius:    var(--r) !important;
-  border:           none !important;
-  position:         relative !important;
-  box-sizing:       border-box !important;
-  overflow:         hidden;
-  cursor:           pointer;
-  transition:       filter .12s, transform .08s;
-  margin:           0 auto 4px auto !important;
+/* ── Shared container ── */
+#DiaLControl,
+#HangupControl,
+#RecorDControl,
+#ParkControl,
+#ivrParkControl,
+#XferControl,
+#QuickXfer,
+#CustomXfer,
+#WebFormSpan,
+#WebFormSpanTwo,
+#WebFormSpanThree {
+  display:         flex !important;
+  align-items:     center !important;
+  justify-content: center !important;
+  width:           var(--btn-w) !important;
+  height:          var(--btn-h) !important;
+  border-radius:   var(--r) !important;
+  border:          none !important;
+  position:        relative !important;
+  box-sizing:      border-box !important;
+  overflow:        hidden !important;
+  cursor:          pointer !important;
+  margin:          0 auto 4px !important;
+  transition:      filter .13s, transform .08s, box-shadow .13s !important;
+  box-shadow:      var(--sh-xs) !important;
 }
-#DiaLControl:active, #HangupControl:active, #RecorDControl:active,
-#ParkControl:active, #ivrParkControl:active, #XferControl:active,
-#QuickXfer:active, #CustomXfer:active,
-#WebFormSpan:active, #WebFormSpanTwo:active, #WebFormSpanThree:active { transform: scale(.97); }
 
-/* ── Hover brightness ── */
-#DiaLControl:hover, #HangupControl:hover, #RecorDControl:hover,
-#ParkControl:hover, #ivrParkControl:hover, #XferControl:hover,
-#QuickXfer:hover, #CustomXfer:hover,
-#WebFormSpan:hover, #WebFormSpanTwo:hover, #WebFormSpanThree:hover,
-#ReQueueCall:hover { filter: brightness(.88); }
+/* ── Hover ── */
+#DiaLControl:hover,
+#HangupControl:hover,
+#RecorDControl:hover,
+#ParkControl:hover,
+#ivrParkControl:hover,
+#XferControl:hover,
+#QuickXfer:hover,
+#CustomXfer:hover,
+#WebFormSpan:hover,
+#WebFormSpanTwo:hover,
+#WebFormSpanThree:hover {
+  filter:     brightness(.90) !important;
+  box-shadow: var(--sh-sm) !important;
+}
 
-/* ── Hide ALL imgs ── */
-#DiaLControl img, #HangupControl img, #RecorDControl img,
-#ParkControl img, #ivrParkControl img, #XferControl img,
-#QuickXfer img, #CustomXfer img,
-#WebFormSpan img, #WebFormSpanTwo img, #WebFormSpanThree img,
-#ReQueueCall img {
+/* ── Active ── */
+#DiaLControl:active,
+#HangupControl:active,
+#RecorDControl:active,
+#ParkControl:active,
+#ivrParkControl:active,
+#XferControl:active,
+#QuickXfer:active,
+#CustomXfer:active,
+#WebFormSpan:active,
+#WebFormSpanTwo:active,
+#WebFormSpanThree:active {
+  transform: scale(.97) !important;
+}
+
+/* ── Hide all GIF images ── */
+#DiaLControl img,
+#HangupControl img,
+#RecorDControl img,
+#ParkControl img,
+#ivrParkControl img,
+#XferControl img,
+#QuickXfer img,
+#CustomXfer img,
+#WebFormSpan img,
+#WebFormSpanTwo img,
+#WebFormSpanThree img {
   opacity:        0 !important;
   width:          0 !important;
   height:         0 !important;
   display:        block !important;
   pointer-events: none !important;
+  position:       absolute !important;
 }
 
-/* ── <a> links = click-area overlay (transparent, covers full span) ── */
-#DiaLControl > a, #HangupControl > a, #RecorDControl > a,
-#ParkControl > a, #ivrParkControl > a, #XferControl > a,
-#QuickXfer > a, #CustomXfer > a,
-#WebFormSpan > a, #WebFormSpanTwo > a, #WebFormSpanThree > a,
-#ReQueueCall > a {
+/* ── <a> = click overlay ── */
+#DiaLControl > a,
+#HangupControl > a,
+#RecorDControl > a,
+#ParkControl > a,
+#ivrParkControl > a,
+#XferControl > a,
+#QuickXfer > a,
+#CustomXfer > a,
+#WebFormSpan > a,
+#WebFormSpanTwo > a,
+#WebFormSpanThree > a {
   position:        absolute !important;
   inset:           0 !important;
   z-index:         2 !important;
@@ -270,68 +437,70 @@ body {
   display:         block !important;
 }
 
-/* ── Shared label typography ── */
-#DiaLControl::after, #HangupControl::after, #RecorDControl::after,
-#ParkControl::after, #ivrParkControl::after, #XferControl::after,
-#QuickXfer::after, #CustomXfer::after,
-#WebFormSpan::after, #WebFormSpanTwo::after, #WebFormSpanThree::after,
-#ReQueueCall::after {
+/* ── Label text (::after) ── */
+#DiaLControl::after,
+#HangupControl::after,
+#RecorDControl::after,
+#ParkControl::after,
+#ivrParkControl::after,
+#XferControl::after,
+#QuickXfer::after,
+#CustomXfer::after,
+#WebFormSpan::after,
+#WebFormSpanTwo::after,
+#WebFormSpanThree::after {
   font-family:    var(--font) !important;
-  font-size:      10px;
-  font-weight:    600;
-  letter-spacing: .4px;
-  text-transform: uppercase;
-  color:          #FFFFFF;
-  pointer-events: none;
-  position:       relative;
-  z-index:        1;
+  font-size:      var(--btn-fs) !important;
+  font-weight:    600 !important;
+  letter-spacing: .3px !important;
+  text-transform: uppercase !important;
+  color:          #FFFFFF !important;
+  pointer-events: none !important;
+  position:       relative !important;
+  z-index:        1 !important;
 }
 
 /* ── Per-button colors & labels ── */
 #DiaLControl {
   background-color: var(--btn-dial) !important;
-  box-shadow: 0 2px 6px rgba(29,91,215,.35) !important;
 }
 #DiaLControl::after { content: "Dial Next Number"; }
 
 #HangupControl {
   background-color: var(--btn-hangup) !important;
-  box-shadow: 0 2px 6px rgba(196,30,30,.35) !important;
 }
 #HangupControl::after { content: "Hang Up Customer"; }
 
 #RecorDControl {
   background-color: var(--btn-record) !important;
-  box-shadow: 0 2px 4px rgba(10,124,82,.3) !important;
 }
 #RecorDControl::after { content: "Start Recording"; }
 
 #ParkControl {
   background-color: var(--btn-park) !important;
-  box-shadow: 0 2px 4px rgba(183,93,0,.3) !important;
 }
 #ParkControl::after { content: "Park Call"; }
 
 #ivrParkControl {
   background-color: var(--btn-park) !important;
+  opacity: .85;
 }
 #ivrParkControl::after { content: "IVR Park"; }
 
 #XferControl {
   background-color: var(--btn-xfer) !important;
-  box-shadow: 0 2px 4px rgba(91,33,182,.3) !important;
 }
 #XferControl::after { content: "Transfer / Conf"; }
 
 #QuickXfer {
   background-color: var(--btn-xfer) !important;
-  opacity: .9;
+  opacity: .88;
 }
 #QuickXfer::after { content: "Quick Transfer"; }
 
 #CustomXfer {
   background-color: var(--btn-xfer) !important;
-  opacity: .85;
+  opacity: .80;
 }
 #CustomXfer::after { content: "Custom Transfer"; }
 
@@ -342,188 +511,486 @@ body {
 
 #WebFormSpanTwo {
   background-color: var(--btn-web) !important;
-  opacity: .9;
+  opacity: .88;
 }
 #WebFormSpanTwo::after { content: "Web Form 2"; }
 
 #WebFormSpanThree {
   background-color: var(--btn-web) !important;
-  opacity: .85;
+  opacity: .80;
 }
 #WebFormSpanThree::after { content: "Web Form 3"; }
 
-#ReQueueCall {
-  background-color: var(--btn-neutral) !important;
+/* ── Stereo record ── */
+#StRecorDControl {
+  display:         flex !important;
+  align-items:     center !important;
+  justify-content: center !important;
+  width:           var(--btn-w) !important;
+  height:          24px !important;
+  border-radius:   var(--r) !important;
+  background:      var(--green-bg) !important;
+  border:          1px solid var(--green-bd) !important;
+  position:        relative !important;
+  margin:          0 auto 4px !important;
+  cursor:          pointer !important;
 }
-#ReQueueCall::after { content: "Re-Queue"; }
+#StRecorDControl::after {
+  content:        "Stereo Rec";
+  font-family:    var(--font) !important;
+  font-size:      10px !important;
+  font-weight:    600 !important;
+  color:          var(--green) !important;
+  text-transform: uppercase !important;
+  letter-spacing: .3px !important;
+}
+#StRecorDControl img {
+  opacity:  0 !important;
+  width:    0 !important;
+  height:   0 !important;
+  display:  block !important;
+  position: absolute !important;
+}
 
-/* ── Send DTMF — inline layout: button + text input side by side ── */
+/* ── Send DTMF row ── */
 #SendDTMFdiv {
-  display:     flex !important;
-  align-items: center !important;
-  gap:         5px !important;
-  margin:      4px auto 0 !important;
+  display:         flex !important;
+  align-items:     center !important;
+  gap:             4px !important;
+  margin:          3px auto 0 !important;
+  width:           var(--btn-w) !important;
   justify-content: center !important;
 }
 
 #SendDTMF {
   display:     inline-flex !important;
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
   position:    relative !important;
 }
-
 #SendDTMF > a {
-  display:          inline-flex !important;
-  align-items:      center;
-  justify-content:  center;
-  width:            76px;
-  height:           28px;
-  background-color: var(--btn-neutral) !important;
-  border-radius:    var(--r);
-  color:            #FFFFFF !important;
-  font-family:      var(--font) !important;
-  font-size:        10px;
-  font-weight:      600;
-  letter-spacing:   .3px;
-  text-transform:   uppercase;
-  text-decoration:  none !important;
-  cursor:           pointer;
-  transition:       filter .12s;
-  position:         relative !important;
-  inset:            auto !important;
+  display:         inline-flex !important;
+  align-items:     center !important;
+  justify-content: center !important;
+  width:           70px !important;
+  height:          var(--btn-h) !important;
+  background:      var(--btn-neutral) !important;
+  border-radius:   var(--r) !important;
+  color:           #FFFFFF !important;
+  font-family:     var(--font) !important;
+  font-size:       10px !important;
+  font-weight:     600 !important;
+  letter-spacing:  .3px !important;
+  text-transform:  uppercase !important;
+  text-decoration: none !important;
+  cursor:          pointer !important;
+  transition:      filter .13s !important;
+  position:        relative !important;
+  inset:           auto !important;
 }
-#SendDTMF > a:hover  { filter: brightness(.85); }
-#SendDTMF > a > img  { opacity:0!important; width:0!important; height:0!important;
-                        display:block!important; pointer-events:none!important; }
-#SendDTMF > a::after { content: "DTMF"; font-size: 10px; }
+#SendDTMF > a:hover { filter: brightness(.87) !important; }
+#SendDTMF > a > img {
+  opacity:  0 !important;
+  width:    0 !important;
+  height:   0 !important;
+  display:  block !important;
+  position: absolute !important;
+}
+#SendDTMF > a::after {
+  content:   "DTMF";
+  font-size: 10px !important;
+}
 
-/* DTMF text input */
 #conf_dtmf {
   width:         60px !important;
-  height:        28px !important;
+  height:        var(--btn-h) !important;
   font-family:   var(--font) !important;
   font-size:     11px !important;
   padding:       0 7px !important;
-  border:        1px solid rgba(255,255,255,.2) !important;
+  border:        1px solid var(--bd) !important;
   border-radius: var(--r) !important;
-  background:    rgba(255,255,255,.1) !important;
-  color:         #FFFFFF !important;
-  outline:       none;
+  background:    var(--surface) !important;
+  color:         var(--tx) !important;
+  outline:       none !important;
 }
 #conf_dtmf:focus {
-  border-color: var(--hd-link) !important;
-  background:   rgba(255,255,255,.15) !important;
+  border-color: var(--bd-focus) !important;
+  box-shadow:   0 0 0 3px var(--focus-ring) !important;
 }
-#conf_dtmf::placeholder { color: rgba(255,255,255,.4); }
-
-/* ── Stereo record button — img without <a>, apply filter ── */
-#StRecorDControl {
-  display:     flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width:       138px !important;
-  height:      28px !important;
-  border-radius: var(--r) !important;
-  background:  rgba(10,124,82,.15) !important;
-  border:      1px solid rgba(10,124,82,.35) !important;
-  position:    relative !important;
-  margin:      0 auto 4px !important;
-}
-#StRecorDControl::after {
-  content:     "Stereo Rec";
-  font-family: var(--font) !important;
-  font-size:   10px; font-weight: 600;
-  color:       rgba(10,124,82,.7);
-  text-transform: uppercase; letter-spacing: .3px;
-}
-#StRecorDControl img { opacity:0!important; width:0!important; height:0!important;
-                        display:block!important; }
+#conf_dtmf::placeholder { color: var(--tx-light); }
 
 /* ══════════════════════════════════════════════════════════════════════
-   8. CUSTOMER FORM — Content area inputs
-   All use class="cust_form" — target that + textarea + select
+   8. CUSTOMER FORM INPUTS — Center content area
+   All inputs use class="cust_form" — universal target
    ══════════════════════════════════════════════════════════════════════ */
-
-/* Universal rule for ALL text inputs in the customer form */
 input.cust_form {
   font-family:    var(--font) !important;
   font-size:      12px !important;
-  height:         28px !important;
-  padding:        0 10px !important;
+  height:         26px !important;
+  padding:        0 9px !important;
   border:         1px solid var(--bd) !important;
   border-radius:  var(--r) !important;
   background:     var(--surface) !important;
   color:          var(--tx) !important;
   vertical-align: middle !important;
-  transition:     border-color .15s, box-shadow .15s;
-  outline:        none;
+  transition:     border-color .15s, box-shadow .15s !important;
+  outline:        none !important;
 }
 input.cust_form:focus {
-  border-color: var(--focus) !important;
+  border-color: var(--bd-focus) !important;
   box-shadow:   0 0 0 3px var(--focus-ring) !important;
 }
+input.cust_form[readonly],
 input.cust_form:read-only {
-  background:  var(--bg-alt) !important;
-  color:       var(--tx-muted) !important;
-  cursor:      default;
+  background: var(--bg-alt) !important;
+  color:      var(--tx-muted) !important;
+  cursor:     default !important;
 }
 
-/* Textareas in customer form */
 textarea.cust_form,
 textarea.cust_form_text,
 #comments,
 #call_notes {
   font-family:   var(--font) !important;
   font-size:     12px !important;
-  padding:       7px 10px !important;
+  padding:       7px 9px !important;
   border:        1px solid var(--bd) !important;
   border-radius: var(--r) !important;
   background:    var(--surface) !important;
   color:         var(--tx) !important;
-  resize:        vertical;
-  outline:       none;
-  transition:    border-color .15s, box-shadow .15s;
+  resize:        vertical !important;
+  outline:       none !important;
+  transition:    border-color .15s, box-shadow .15s !important;
 }
-textarea.cust_form:focus, textarea.cust_form_text:focus,
-#comments:focus, #call_notes:focus {
-  border-color: var(--focus) !important;
+textarea.cust_form:focus,
+textarea.cust_form_text:focus,
+#comments:focus,
+#call_notes:focus {
+  border-color: var(--bd-focus) !important;
   box-shadow:   0 0 0 3px var(--focus-ring) !important;
 }
 
-/* Selects in customer form */
 select.cust_form,
 #gender_list {
-  font-family:   var(--font) !important;
-  font-size:     12px !important;
-  height:        28px !important;
-  padding:       0 8px !important;
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  background:    var(--surface) !important;
-  color:         var(--tx) !important;
+  font-family:    var(--font) !important;
+  font-size:      12px !important;
+  height:         26px !important;
+  padding:        0 7px !important;
+  border:         1px solid var(--bd) !important;
+  border-radius:  var(--r) !important;
+  background:     var(--surface) !important;
+  color:          var(--tx) !important;
   vertical-align: middle !important;
-  outline:       none;
+  outline:        none !important;
+  cursor:         pointer !important;
 }
-
-/* Transfer number input */
-#xfernumber {
-  font-family:   var(--font) !important;
-  font-size:     12px !important;
-  height:        28px !important;
-  padding:       0 10px !important;
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  background:    var(--surface) !important;
-  color:         var(--tx) !important;
-  outline:       none;
-}
-#xfernumber:focus {
-  border-color: var(--focus) !important;
+select.cust_form:focus,
+#gender_list:focus {
+  border-color: var(--bd-focus) !important;
   box-shadow:   0 0 0 3px var(--focus-ring) !important;
 }
 
-/* Transfer group select */
+/* Transfer number + group */
+#xfernumber,
 #XfeRGrouP {
+  font-family:   var(--font) !important;
+  font-size:     12px !important;
+  height:        26px !important;
+  padding:       0 9px !important;
+  border:        1px solid var(--bd) !important;
+  border-radius: var(--r) !important;
+  background:    var(--surface) !important;
+  color:         var(--tx) !important;
+  outline:       none !important;
+}
+#xfernumber:focus,
+#XfeRGrouP:focus {
+  border-color: var(--bd-focus) !important;
+  box-shadow:   0 0 0 3px var(--focus-ring) !important;
+}
+
+/* Generic form_field class */
+input.form_field,
+textarea.form_field,
+select.form_field {
+  font-family:    var(--font) !important;
+  font-size:      11px !important;
+  height:         26px !important;
+  padding:        0 8px !important;
+  border:         1px solid var(--bd) !important;
+  border-radius:  var(--r) !important;
+  background:     var(--surface) !important;
+  color:          var(--tx) !important;
+  vertical-align: middle !important;
+  outline:        none !important;
+}
+textarea.form_field { height: auto !important; padding: 6px 8px !important; }
+input.form_field:focus,
+textarea.form_field:focus,
+select.form_field:focus {
+  border-color: var(--bd-focus) !important;
+  box-shadow:   0 0 0 3px var(--focus-ring) !important;
+}
+
+/* Chat textarea */
+textarea.chat_box {
+  font-family:   var(--font) !important;
+  font-size:     11px !important;
+  border:        1px solid var(--bd) !important;
+  border-radius: var(--r) !important;
+  padding:       5px 8px !important;
+  outline:       none !important;
+}
+textarea.chat_box:focus {
+  border-color: var(--bd-focus) !important;
+  box-shadow:   0 0 0 3px var(--focus-ring) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   9. CONTENT AREA — Center column
+   ══════════════════════════════════════════════════════════════════════ */
+#MainTable > tbody > tr > td:nth-child(2) {
+  background-color: var(--surface) !important;
+  vertical-align:   top !important;
+  padding:          8px 10px !important;
+}
+
+#MainPanelCustInfo {
+  font-family: var(--font) !important;
+}
+#MainPanelCustInfo table {
+  border-collapse: collapse !important;
+  width:           100% !important;
+}
+#MainPanelCustInfo td {
+  padding:        3px 5px !important;
+  vertical-align: middle !important;
+  font-family:    var(--font) !important;
+  font-size:      11px !important;
+  color:          var(--tx) !important;
+}
+
+/* Section header rows inside customer info */
+#MainPanelCustInfo tr td[colspan] {
+  background-color: var(--bg) !important;
+  padding:          5px 8px !important;
+  border-top:       1px solid var(--bg-alt) !important;
+  border-bottom:    1px solid var(--bg-alt) !important;
+}
+#MainPanelCustInfo tr td[colspan] font,
+#MainPanelCustInfo tr td[colspan] b {
+  font-family:    var(--font) !important;
+  font-size:      11px !important;
+  font-weight:    700 !important;
+  color:          var(--tx-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: .5px !important;
+}
+
+/* Field labels */
+#MainPanelCustInfo b,
+#MainPanelCustInfo strong {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  font-weight: 600 !important;
+  color:       var(--tx-muted) !important;
+}
+
+/* Datetime / channel info */
+#custdatetime {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  font-weight: 600 !important;
+  color:       var(--tx) !important;
+}
+#callchannel {
+  font-family: var(--font) !important;
+  font-size:   10px !important;
+  color:       var(--tx-light) !important;
+}
+#CusTInfOSpaN {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  font-weight: 600 !important;
+  color:       var(--tx-muted) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   10. RIGHT COLUMN — Phone / WebPhone panel
+   ══════════════════════════════════════════════════════════════════════ */
+#MainTable > tbody > tr > td:nth-child(3) {
+  background-color: var(--surface) !important;
+  vertical-align:   top !important;
+}
+
+/* WebPhone container — keep its own styling, just normalize font */
+#SIPphonePanel td,
+#SoftPhonePanel td {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+}
+#SIPstatusSpan,
+#SIPregSpan {
+  font-family: var(--font) !important;
+  font-size:   10px !important;
+  font-weight: 600 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   11. TYPOGRAPHY — Global class overrides
+   ══════════════════════════════════════════════════════════════════════ */
+.body_text        { font-family: var(--font) !important; font-size: 12px !important; color: var(--tx) !important; }
+.body_small       { font-family: var(--font) !important; font-size: 11px !important; color: var(--tx) !important; }
+.body_small_bold  { font-family: var(--font) !important; font-size: 11px !important; color: var(--tx) !important; font-weight: 600 !important; }
+.body_tiny        { font-family: var(--font) !important; font-size: 10px !important; color: var(--tx-muted) !important; }
+.sb_text          { font-family: var(--font) !important; font-size: 11px !important; color: var(--tx) !important; }
+.sk_text          { font-family: var(--font) !important; font-size: 11px !important; color: var(--tx-muted) !important; }
+.skb_text         { font-family: var(--font) !important; font-size: 12px !important; color: var(--tx) !important; font-weight: 600 !important; }
+.sh_text          { font-family: var(--font) !important; font-size: 13px !important; color: var(--tx) !important; font-weight: 600 !important; }
+.sh_text_white    { font-family: var(--font) !important; font-size: 13px !important; color: #FFFFFF !important; font-weight: 600 !important; }
+.sd_text          { font-family: var(--font) !important; font-size: 15px !important; color: var(--tx) !important; font-weight: 700 !important; }
+.log_text         { font-family: 'Courier New', monospace !important; font-size: 11px !important; color: var(--tx-muted) !important; }
+.log_text_red     { font-family: 'Courier New', monospace !important; font-size: 11px !important; background: var(--red-bg) !important; color: var(--red) !important; font-weight: 700 !important; }
+.log_title        { font-family: var(--font) !important; font-size: 12px !important; color: var(--tx) !important; font-weight: 700 !important; }
+.loading_text     { font-family: var(--font) !important; font-size: 16px !important; color: var(--tx-muted) !important; }
+.queue_text       { font-family: var(--font) !important; font-size: 11px !important; color: var(--tx) !important; text-decoration: none !important; }
+.queue_text_red   { font-family: var(--font) !important; font-size: 12px !important; color: var(--red) !important; font-weight: 700 !important; }
+.cust_form_text   { font-family: var(--font) !important; font-size: 11px !important; color: var(--tx) !important; }
+
+/* Semantic state classes */
+.preview_text {
+  background: var(--green-bg) !important;
+  color:      var(--green) !important;
+  font-family: var(--font) !important;
+  border-radius: var(--r-sm) !important;
+  padding: 1px 5px !important;
+}
+.preview_text_red {
+  background: var(--red-bg) !important;
+  color:      var(--red) !important;
+  font-family: var(--font) !important;
+  border-radius: var(--r-sm) !important;
+  padding: 1px 5px !important;
+}
+.ON_conf {
+  background: var(--amber-bg) !important;
+  color:      var(--amber) !important;
+  font-family: var(--font) !important;
+  border-radius: var(--r-sm) !important;
+}
+.OFF_conf {
+  background: var(--bg-alt) !important;
+  color:      var(--tx-muted) !important;
+  font-family: var(--font) !important;
+  border-radius: var(--r-sm) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   12. LINKS — Content area
+   ══════════════════════════════════════════════════════════════════════ */
+#MainPanel a,
+#AgentTimeSpan a,
+#CallLogLinkSpan a,
+#PauseCodeLinkSpan a,
+#ScriptRefresH a,
+#MainCommit a {
+  color:           var(--blue) !important;
+  text-decoration: none !important;
+  font-family:     var(--font) !important;
+}
+#MainPanel a:hover,
+#AgentTimeSpan a:hover,
+#CallLogLinkSpan a:hover,
+#PauseCodeLinkSpan a:hover,
+#ScriptRefresH a:hover,
+#MainCommit a:hover {
+  text-decoration: underline !important;
+}
+#PauseCodeLinkSpan a {
+  color: var(--amber) !important;
+  font-weight: 600 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   13. AGENT STATS / TIMERS
+   ══════════════════════════════════════════════════════════════════════ */
+#AgentTimeSpan,
+#AgentStatusSpan,
+#CallLogLinkSpan,
+#PauseCodeLinkSpan,
+#InGroupSpan {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  color:       var(--tx-muted) !important;
+}
+#AgentTimeSpan b,
+#AgentStatusSpan b,
+#InGroupSpan b {
+  color:       var(--tx) !important;
+  font-weight: 600 !important;
+}
+#CallTimeSpan,
+#CallTiMerSpan {
+  font-family: var(--font) !important;
+  font-size:   13px !important;
+  font-weight: 700 !important;
+  color:       var(--tx) !important;
+  letter-spacing: .8px !important;
+}
+#AgentPersonalQueueSpan {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  color:       var(--blue) !important;
+  font-weight: 600 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   14. STATUS BANNER — semantic color states
+   JS sets inline background-color → we refine with attribute selectors
+   ══════════════════════════════════════════════════════════════════════ */
+/* PAUSED (yellow tones) */
+#MainStatuSSpan[style*="FF0"],
+#MainStatuSSpan[style*="ff0"],
+#MainStatuSSpan[style*="FFFF"] {
+  background: var(--amber-bg) !important;
+  color:      var(--amber) !important;
+  border-bottom-color: var(--amber-bd) !important;
+}
+/* INCALL / LIVE (green tones) */
+#MainStatuSSpan[style*="00CC"],
+#MainStatuSSpan[style*="99FF"],
+#MainStatuSSpan[style*="CCFF"],
+#MainStatuSSpan[style*="00FF00"] {
+  background: var(--green-bg) !important;
+  color:      var(--green) !important;
+  border-bottom-color: var(--green-bd) !important;
+}
+/* INBOUND / QUEUE (blue tones) */
+#MainStatuSSpan[style*="6666FF"],
+#MainStatuSSpan[style*="9999FF"],
+#MainStatuSSpan[style*="CCCCFF"] {
+  background: var(--blue-bg) !important;
+  color:      var(--blue) !important;
+  border-bottom-color: var(--blue-bd) !important;
+}
+/* HANGUP / ERROR (red tones) */
+#MainStatuSSpan[style*="FF3333"],
+#MainStatuSSpan[style*="FF0000"] {
+  background: var(--red-bg) !important;
+  color:      var(--red) !important;
+  border-bottom-color: var(--red-bd) !important;
+}
+#MainStatuSSpan font {
+  font-family:  var(--font) !important;
+  font-size:    11px !important;
+  font-weight:  700 !important;
+  letter-spacing: .4px !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   15. PAUSE CODE
+   ══════════════════════════════════════════════════════════════════════ */
+#PauseCodeList,
+select#pause_code {
   font-family:   var(--font) !important;
   font-size:     11px !important;
   height:        26px !important;
@@ -532,518 +999,164 @@ select.cust_form,
   border-radius: var(--r) !important;
   background:    var(--surface) !important;
   color:         var(--tx) !important;
-  outline:       none;
-}
-
-/* form_field class used in transfer panel and overlays */
-input.form_field,
-textarea.form_field,
-select.form_field {
-  font-family:   var(--font) !important;
-  font-size:     11px !important;
-  height:        26px !important;
-  padding:       0 8px !important;
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  background:    var(--surface) !important;
-  color:         var(--tx) !important;
-  vertical-align: middle !important;
-  outline:       none;
-}
-textarea.form_field {
-  height:  auto !important;
-  padding: 6px 8px !important;
-}
-input.form_field:focus, textarea.form_field:focus, select.form_field:focus {
-  border-color: var(--focus) !important;
-  box-shadow:   0 0 0 3px var(--focus-ring) !important;
-}
-
-/* Chat textarea */
-textarea.chat_box {
-  font-family:   var(--font) !important;
-  font-size:     11px;
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  padding:       5px 8px !important;
-  outline:       none;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   9. TYPOGRAPHY
-   ══════════════════════════════════════════════════════════════════════ */
-.body_text, .body_small, .body_small_bold, .body_tiny,
-.sb_text, .sk_text, .skb_text, .sh_text, .sd_text,
-.log_text, .log_title, .loading_text,
-.cust_form_text, .queue_text { font-family: var(--font) !important; }
-
-.body_text        { font-size: 12px; color: var(--tx);       }
-.body_small       { font-size: 11px; color: var(--tx);       }
-.body_small_bold  { font-size: 11px; color: var(--tx); font-weight: 600; }
-.body_tiny        { font-size: 10px; color: var(--tx-muted); }
-.sb_text          { font-size: 11px; color: var(--tx);       }
-.sk_text          { font-size: 11px; color: var(--tx-muted); }
-.skb_text         { font-size: 12px; color: var(--tx); font-weight: 600; }
-.sh_text          { font-size: 13px; color: var(--tx); font-weight: 600; }
-.sh_text_white    { font-size: 13px; color: #FFFFFF;   font-weight: 600; }
-.log_text         { font-size: 11px; color: var(--tx-muted); font-family: 'Courier New', monospace !important; }
-.log_title        { font-size: 12px; color: var(--tx); font-weight: 600; }
-.loading_text     { font-size: 15px; color: var(--tx-muted); }
-.queue_text       { font-size: 11px; color: var(--tx); text-decoration: none; }
-.queue_text_red   { font-size: 12px; color: var(--red); font-weight: 700; }
-
-/* Semantic display classes */
-.preview_text     { background: var(--green-bg); color: var(--green); font-family: var(--font) !important; }
-.preview_text_red { background: var(--red-bg);   color: var(--red);   font-family: var(--font) !important; }
-.ON_conf          { background: #FEFCE8; color: var(--amber); font-family: var(--font) !important; }
-.OFF_conf         { background: var(--bg-alt); color: var(--tx-muted); font-family: var(--font) !important; }
-
-/* ══════════════════════════════════════════════════════════════════════
-   10. CSS-RENDERED BUTTONS (not GIF images)
-   ══════════════════════════════════════════════════════════════════════ */
-input.red_btn {
-  font-family: var(--font) !important; font-size: 10px; font-weight: 600;
-  color: #FFF; background: #C41E1E !important; border: none !important;
-  border-radius: var(--r); padding: 0 12px; height: 26px; cursor: pointer;
-  letter-spacing: .3px;
-}
-input.green_btn {
-  font-family: var(--font) !important; font-size: 10px; font-weight: 600;
-  color: #FFF; background: #0A7C52 !important; border: none !important;
-  border-radius: var(--r); padding: 0 12px; height: 26px; cursor: pointer;
-  letter-spacing: .3px;
-}
-input.blue_btn {
-  font-family: var(--font) !important; font-size: 10px; font-weight: 600;
-  color: #FFF; background: #1D4ED8 !important; border: none !important;
-  border-radius: var(--r); padding: 0 12px; height: 26px; cursor: pointer;
-  letter-spacing: .3px;
-}
-input.tiny_red_btn {
-  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
-  color: #FFF; background: #C41E1E !important; border: none !important;
-  border-radius: var(--r-s); padding: 0 9px; height: 22px; cursor: pointer;
-}
-input.tiny_blue_btn {
-  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
-  color: #FFF; background: #1D4ED8 !important; border: none !important;
-  border-radius: var(--r-s); padding: 0 9px; height: 22px; cursor: pointer;
-}
-input.tiny_yellow_btn {
-  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
-  color: var(--tx); background: #EAB308 !important; border: none !important;
-  border-radius: var(--r-s); padding: 0 9px; height: 22px; cursor: pointer;
-}
-input.tiny_green_btn {
-  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
-  color: #FFF; background: #0A7C52 !important; border: none !important;
-  border-radius: var(--r-s); padding: 0 9px; height: 22px; cursor: pointer;
-}
-.button_active {
-  font-family: var(--font) !important; font-size: 12px;
-  background: #0A7C52 !important; border: none !important;
-  border-radius: var(--r); padding: 5px 14px; color: #FFF; cursor: pointer;
-}
-.button_inactive {
-  font-family: var(--font) !important; font-size: 12px;
-  background: #6B7A8D !important; border: none !important;
-  border-radius: var(--r); padding: 5px 14px; color: #FFF;
-  opacity: .5; cursor: not-allowed;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   11. LINKS
-   ══════════════════════════════════════════════════════════════════════ */
-#MainPanel a,
-#MainCommit a,
-#AgentTimeSpan a,
-#CallLogLinkSpan a,
-#PauseCodeLinkSpan a,
-#ScriptRefresH a       { color: var(--blue) !important; text-decoration: none; }
-
-#MainPanel a:hover,
-#AgentTimeSpan a:hover,
-#CallLogLinkSpan a:hover,
-#PauseCodeLinkSpan a:hover,
-#ScriptRefresH a:hover { text-decoration: underline; }
-
-/* ══════════════════════════════════════════════════════════════════════
-   12. STRUCTURAL PANELS
-   ══════════════════════════════════════════════════════════════════════ */
-
-/* Transfer panel */
-#TransferMain {
-  background-color: var(--bg-alt) !important;
-}
-
-/* Script / Form / Email panel table backgrounds */
-#ScriptContents,
-#Script2Contents {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  color:       var(--tx) !important;
-}
-
-/* Sidebar agent view */
-#AgentViewSpan {
-  background-color: var(--bg) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   13. FOOTER
-   ══════════════════════════════════════════════════════════════════════ */
-#MaiNfooterspan,
-#MaiNfooter { background-color: var(--bg-alt) !important; }
-
-#MaiNfooterspan font,
-#MaiNfooter font {
-  font-family: var(--font) !important;
-  font-size:   10px;
-  color:       var(--tx-muted) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   14. MODAL / OVERLAY BOXES
-   ══════════════════════════════════════════════════════════════════════ */
-#HotKeyActionBox table,
-#HotKeyEntriesBox table     { background-color: #FFFBEB !important; }
-
-#EAcommentsBox table,
-#EAcommentsMinBox table     { background-color: #FFFFF0 !important; }
-
-#WrapupBox table,
-#FSCREENWrapupBox table     { background-color: var(--surface) !important; }
-
-/* ══════════════════════════════════════════════════════════════════════
-   15. CHAT SCROLL CONTAINERS
-   ══════════════════════════════════════════════════════════════════════ */
-div.scrolling,
-div.scrolling_transcript,
-div.scrolling_chat_display {
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  background:    var(--surface) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   16. STATUS INDICATORS (content area)
-   ══════════════════════════════════════════════════════════════════════ */
-#MainStatuSSpan b,
-#MainStatuSSpan strong { font-weight: 700; }
-
-#AgentTimeSpan,
-#AgentStatusSpan,
-#CallLogLinkSpan,
-#PauseCodeLinkSpan {
-  font-family: var(--font) !important;
-  font-size:   11px;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   17. CUSTOMER INFO SECTION
-   ══════════════════════════════════════════════════════════════════════ */
-#MainPanelCustInfo {
-  font-family: var(--font) !important;
-}
-
-/* Customer info header row labels */
-#custdatetime {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  font-weight: 600;
-  color:       var(--tx) !important;
-}
-
-#callchannel {
-  font-family: var(--font) !important;
-  font-size:   10px !important;
-  color:       var(--tx-muted) !important;
-}
-
-/* Customer info section heading */
-#CusTInfOSpaN {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   18. TRANSFER PANEL DETAILS
-   ══════════════════════════════════════════════════════════════════════ */
-#TransferMain {
-  background-color: var(--bg-alt) !important;
-}
-
-#XfeRDiaLGrouPSelecteD {
-  font-family: var(--font) !important;
-  font-size:   11px;
-  font-weight: 600;
-  color:       var(--tx) !important;
-}
-
-#XfeRCID {
-  font-family: var(--font) !important;
-  font-size:   10px;
-  color:       var(--tx-muted) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   19. LOADING SCREEN
-   ══════════════════════════════════════════════════════════════════════ */
-.loading_text {
-  font-family: var(--font) !important;
-  font-size:   16px !important;
-  color:       var(--tx-muted) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   20. WEBKIT SCROLLBARS
-   ══════════════════════════════════════════════════════════════════════ */
-::-webkit-scrollbar        { width: 6px; height: 6px; }
-::-webkit-scrollbar-track  { background: var(--bg); }
-::-webkit-scrollbar-thumb  { background: var(--bd-dark); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--tx-light); }
-
-/* ══════════════════════════════════════════════════════════════════════
-   21. PRINT — hide non-essential chrome
-   ══════════════════════════════════════════════════════════════════════ */
-@media print {
-  #Header, #Tabs, #MaiNfooterspan { display: none !important; }
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   22. CONTENT AREA — Center column (customer form section)
-   The center TD holds #MainPanelCustInfo and the customer form table.
-   We style the table cells, labels, row alternation without touching
-   the outer absolutely-positioned container.
-   ══════════════════════════════════════════════════════════════════════ */
-
-/* Center column background — light clean surface */
-#MainTable > tbody > tr > td:nth-child(2) {
-  background-color: var(--surface) !important;
-  vertical-align: top !important;
-  padding: 8px 12px !important;
-}
-
-/* Customer form inner table — no extra borders */
-#MainPanelCustInfo table {
-  border-collapse: collapse !important;
-  width: 100% !important;
-}
-
-/* Form row separators — ultra-subtle */
-#MainPanelCustInfo tr {
-  border-bottom: 1px solid var(--bg-alt) !important;
-}
-#MainPanelCustInfo tr:last-child {
-  border-bottom: none !important;
-}
-
-/* Form label cells */
-#MainPanelCustInfo td:first-child font,
-#MainPanelCustInfo td:first-child b,
-#MainPanelCustInfo td:first-child .body_small,
-#MainPanelCustInfo td:first-child .body_small_bold,
-#MainPanelCustInfo td:first-child .body_text,
-#MainPanelCustInfo td:first-child .cust_form {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  color:       var(--tx-muted) !important;
-  font-weight: 500 !important;
-}
-
-/* Bold labels (field names) */
-#MainPanelCustInfo b,
-#MainPanelCustInfo strong {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  color:       var(--tx-muted) !important;
-  font-weight: 600 !important;
-}
-
-/* Section heading separators inside form */
-#MainPanelCustInfo tr td[colspan] {
-  background-color: var(--bg) !important;
-  padding: 4px 8px !important;
-}
-#MainPanelCustInfo tr td[colspan] font,
-#MainPanelCustInfo tr td[colspan] b {
-  color:       var(--tx) !important;
-  font-size:   11px !important;
-  font-weight: 700 !important;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-/* Every input row — consistent vertical spacing */
-#MainPanelCustInfo td {
-  padding: 3px 6px !important;
-  vertical-align: middle !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   23. PHONE / DIALER PANEL — Right column
-   CRITICAL: no margin/border added that changes layout dimensions.
-   Only font + color styling to match theme.
-   ══════════════════════════════════════════════════════════════════════ */
-#MainTable > tbody > tr > td:nth-child(3) {
-  background-color: var(--surface) !important;
-  vertical-align: top !important;
-}
-
-/* Phone dialer number display */
-#phone_number_display,
-#DialerNumber,
-#PhoneLineDisplay {
-  font-family: var(--font) !important;
-  font-size:   16px !important;
-  font-weight: 700 !important;
-  color:       var(--tx) !important;
-  letter-spacing: 1.5px;
-}
-
-/* Softphone keypad buttons */
-#SoftPhonePanel input[type="button"],
-#SoftPhonePanel button,
-#SoftPhonePanel .tiny_red_btn,
-#SoftPhonePanel .tiny_blue_btn {
-  font-family:   var(--font) !important;
-  border-radius: var(--r-s) !important;
+  outline:       none !important;
   cursor:        pointer !important;
-}
-
-/* SIP status indicator */
-#SIPstatusSpan,
-#SIPregSpan {
-  font-family: var(--font) !important;
-  font-size:   10px !important;
-  font-weight: 600;
-}
-
-/* Embedded phone iframe wrapper */
-#EmbeddedPhone,
-#SoftPhoneSpan {
-  background-color: var(--bg) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   24. AGENT STATUS COLOR STATES
-   JS sets background-color inline on #MainStatuSSpan.
-   We override the text, border, and font styling for all known states.
-   ══════════════════════════════════════════════════════════════════════ */
-
-/* Status bar container */
-#MainStatuSSpan {
-  display:      block !important;
-  padding:      6px 12px !important;
-  border-bottom: 1px solid var(--bd) !important;
-  font-family:  var(--font) !important;
-  font-size:    12px !important;
-  font-weight:  700 !important;
-  letter-spacing: .7px !important;
-  text-transform: uppercase !important;
-}
-
-/* When JS sets it to a colored state, ensure text is readable */
-#MainStatuSSpan font {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  font-weight: 700 !important;
-  letter-spacing: .5px;
-}
-
-/* Pause state badge — amber pill */
-#NexTCalLPausE {
-  display:        inline-flex !important;
-  align-items:    center !important;
-  gap:            6px !important;
-  background:     var(--amber-bg) !important;
-  border:         1px solid var(--amber-bd) !important;
-  border-radius:  var(--r) !important;
-  padding:        4px 10px !important;
-  margin:         0 auto 6px auto !important;
-  width:          138px !important;
-  box-sizing:     border-box !important;
-  justify-content: center !important;
-}
-#NexTCalLPausE font,
-#NexTCalLPausE .body_small,
-#NexTCalLPausE .body_text {
-  font-family: var(--font) !important;
-  font-size:   10px !important;
-  font-weight: 600 !important;
-  color:       var(--amber) !important;
-}
-#NexTCalLPausE a {
-  color: var(--amber) !important;
-  font-size: 10px !important;
-  font-weight: 600 !important;
-  text-decoration: none !important;
-}
-#NexTCalLPausE a:hover {
-  text-decoration: underline !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   25. PAUSE CODE SELECTOR
-   ══════════════════════════════════════════════════════════════════════ */
-#PauseCodeList,
-#PauseCodeSelect,
-select#pause_code {
-  font-family:   var(--font) !important;
-  font-size:     11px !important;
-  height:        28px !important;
-  padding:       0 8px !important;
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  background:    var(--surface) !important;
-  color:         var(--tx) !important;
-  outline:       none;
-  cursor:        pointer;
-  max-width:     138px !important;
-  width:         138px !important;
-  margin:        0 auto !important;
+  width:         var(--btn-w) !important;
   display:       block !important;
+  margin:        0 auto 3px !important;
 }
 #PauseCodeList:focus,
 select#pause_code:focus {
-  border-color: var(--focus) !important;
+  border-color: var(--bd-focus) !important;
   box-shadow:   0 0 0 3px var(--focus-ring) !important;
 }
 
-/* Pause code submit button */
-#SubmitPauseCode,
-input#pause_code_submit {
+/* ══════════════════════════════════════════════════════════════════════
+   16. CSS BUTTONS (input[type=button] overrides)
+   Legacy vicidial_stylesheet.css buttons — modernized
+   ══════════════════════════════════════════════════════════════════════ */
+input.tiny_red_btn {
+  font-family: var(--font) !important; font-size: 9px !important; font-weight: 600 !important;
+  color: #FFF !important; background: var(--btn-hangup) !important;
+  border: none !important; border-radius: var(--r-sm) !important;
+  padding: 0 9px !important; height: 22px !important; cursor: pointer !important;
+}
+input.tiny_blue_btn {
+  font-family: var(--font) !important; font-size: 9px !important; font-weight: 600 !important;
+  color: #FFF !important; background: var(--btn-dial) !important;
+  border: none !important; border-radius: var(--r-sm) !important;
+  padding: 0 9px !important; height: 22px !important; cursor: pointer !important;
+}
+input.tiny_yellow_btn {
+  font-family: var(--font) !important; font-size: 9px !important; font-weight: 600 !important;
+  color: var(--tx) !important; background: #EAB308 !important;
+  border: none !important; border-radius: var(--r-sm) !important;
+  padding: 0 9px !important; height: 22px !important; cursor: pointer !important;
+}
+input.tiny_green_btn {
+  font-family: var(--font) !important; font-size: 9px !important; font-weight: 600 !important;
+  color: #FFF !important; background: var(--btn-record) !important;
+  border: none !important; border-radius: var(--r-sm) !important;
+  padding: 0 9px !important; height: 22px !important; cursor: pointer !important;
+}
+input.red_btn {
+  font-family: var(--font) !important; font-size: 11px !important; font-weight: 600 !important;
+  color: #FFF !important; background: var(--btn-hangup) !important;
+  border: none !important; border-radius: var(--r) !important;
+  padding: 0 13px !important; height: 26px !important; cursor: pointer !important;
+}
+input.green_btn {
+  font-family: var(--font) !important; font-size: 11px !important; font-weight: 600 !important;
+  color: #FFF !important; background: var(--btn-record) !important;
+  border: none !important; border-radius: var(--r) !important;
+  padding: 0 13px !important; height: 26px !important; cursor: pointer !important;
+}
+input.blue_btn {
+  font-family: var(--font) !important; font-size: 11px !important; font-weight: 600 !important;
+  color: #FFF !important; background: var(--btn-dial) !important;
+  border: none !important; border-radius: var(--r) !important;
+  padding: 0 13px !important; height: 26px !important; cursor: pointer !important;
+}
+.button_active {
+  font-family: var(--font) !important; font-size: 12px !important;
+  background: var(--btn-record) !important; border: none !important;
+  border-radius: var(--r) !important; padding: 5px 14px !important;
+  color: #FFF !important; cursor: pointer !important;
+}
+.button_inactive {
+  font-family: var(--font) !important; font-size: 12px !important;
+  background: var(--tx-light) !important; border: none !important;
+  border-radius: var(--r) !important; padding: 5px 14px !important;
+  color: #FFF !important; opacity: .55 !important; cursor: not-allowed !important;
+}
+
+/* Generic content area input[type="button"] */
+#MainCommit input[type="button"],
+#MainCommit input[type="submit"] {
   font-family:   var(--font) !important;
-  font-size:     10px !important;
+  font-size:     12px !important;
   font-weight:   600 !important;
-  height:        26px !important;
-  padding:       0 14px !important;
-  background:    var(--btn-neutral) !important;
-  color:         #FFFFFF !important;
+  height:        28px !important;
+  padding:       0 16px !important;
   border:        none !important;
   border-radius: var(--r) !important;
+  background:    var(--btn-dial) !important;
+  color:         #FFFFFF !important;
   cursor:        pointer !important;
-  letter-spacing: .3px;
-  margin:        3px auto 0 !important;
-  display:       block !important;
+  transition:    filter .13s !important;
 }
-#SubmitPauseCode:hover,
-input#pause_code_submit:hover {
-  filter: brightness(.85);
-}
+#MainCommit input[type="button"]:hover,
+#MainCommit input[type="submit"]:hover { filter: brightness(.88) !important; }
 
 /* ══════════════════════════════════════════════════════════════════════
-   26. DISPOSITION CODES / WRAPUP BOX
+   17. TRANSFER PANEL
    ══════════════════════════════════════════════════════════════════════ */
+#TransferMain {
+  background-color: var(--bg) !important;
+  border-top:       1px solid var(--bd) !important;
+}
+#TransferMain table { border-collapse: collapse !important; }
+#TransferMain td {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  color:       var(--tx) !important;
+  padding:     3px 6px !important;
+  vertical-align: middle !important;
+}
+#TransferMain b {
+  font-size:   11px !important;
+  font-weight: 600 !important;
+}
+#XfeRDiaLGrouPSelecteD {
+  font-family: var(--font) !important;
+  font-size:   11px !important;
+  font-weight: 600 !important;
+  color:       var(--tx) !important;
+}
 
-/* Wrapup / disposition overlay */
+/* Transfer action buttons */
+#ConfCancelSpan > a,
+#ConfSendSpan > a,
+#XferSpan > a,
+#BlindXferSpan > a,
+#ConferencedHangup > a {
+  display:         inline-flex !important;
+  align-items:     center !important;
+  justify-content: center !important;
+  min-width:       88px !important;
+  height:          26px !important;
+  border-radius:   var(--r) !important;
+  font-family:     var(--font) !important;
+  font-size:       10px !important;
+  font-weight:     600 !important;
+  letter-spacing:  .2px !important;
+  text-transform:  uppercase !important;
+  color:           #FFFFFF !important;
+  text-decoration: none !important;
+  cursor:          pointer !important;
+  transition:      filter .13s, transform .08s !important;
+  padding:         0 10px !important;
+}
+#ConfSendSpan > a  { background: var(--btn-xfer) !important; }
+#XferSpan > a      { background: var(--btn-xfer) !important; }
+#BlindXferSpan > a { background: var(--btn-neutral) !important; }
+#ConfCancelSpan > a,
+#ConferencedHangup > a { background: var(--btn-hangup) !important; }
+
+#ConfCancelSpan > a:hover, #ConfSendSpan > a:hover,
+#XferSpan > a:hover, #BlindXferSpan > a:hover,
+#ConferencedHangup > a:hover { filter: brightness(.88) !important; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   18. WRAPUP / DISPOSITION OVERLAY
+   ══════════════════════════════════════════════════════════════════════ */
 #WrapupBox,
 #FSCREENWrapupBox {
   background-color: var(--surface) !important;
   border:           1px solid var(--bd) !important;
   border-radius:    var(--r-lg) !important;
-  box-shadow:       var(--shadow-md) !important;
-  overflow:         hidden;
+  box-shadow:       var(--sh-md) !important;
+  overflow:         hidden !important;
 }
 #WrapupBox table,
 #FSCREENWrapupBox table {
@@ -1057,8 +1170,12 @@ input#pause_code_submit:hover {
   color:       var(--tx) !important;
   padding:     6px 10px !important;
 }
-
-/* Disposition select dropdown */
+#WrapupBox b,
+#FSCREENWrapupBox b {
+  font-size:   14px !important;
+  font-weight: 700 !important;
+  color:       var(--tx) !important;
+}
 #DispoSition,
 select#disposition,
 #WrapupBox select,
@@ -1066,32 +1183,20 @@ select#disposition,
   font-family:   var(--font) !important;
   font-size:     12px !important;
   height:        30px !important;
-  padding:       0 10px !important;
+  padding:       0 9px !important;
   border:        1px solid var(--bd) !important;
   border-radius: var(--r) !important;
   background:    var(--surface) !important;
   color:         var(--tx) !important;
-  outline:       none;
-  cursor:        pointer;
-  max-width:     280px;
+  outline:       none !important;
+  cursor:        pointer !important;
+  max-width:     280px !important;
 }
 #DispoSition:focus,
 select#disposition:focus {
-  border-color: var(--focus) !important;
+  border-color: var(--bd-focus) !important;
   box-shadow:   0 0 0 3px var(--focus-ring) !important;
 }
-
-/* Wrapup heading */
-#WrapupBox font[size="3"],
-#WrapupBox b,
-#FSCREENWrapupBox b {
-  font-family: var(--font) !important;
-  font-size:   14px !important;
-  font-weight: 700 !important;
-  color:       var(--tx) !important;
-}
-
-/* Submit disposition button */
 #WrapupBox input[type="button"],
 #FSCREENWrapupBox input[type="button"] {
   font-family:   var(--font) !important;
@@ -1104,744 +1209,329 @@ select#disposition:focus {
   background:    var(--btn-dial) !important;
   color:         #FFFFFF !important;
   cursor:        pointer !important;
-  letter-spacing: .3px;
-  transition:    filter .12s;
+  transition:    filter .13s !important;
 }
 #WrapupBox input[type="button"]:hover,
-#FSCREENWrapupBox input[type="button"]:hover {
-  filter: brightness(.88);
-}
+#FSCREENWrapupBox input[type="button"]:hover { filter: brightness(.88) !important; }
 
 /* ══════════════════════════════════════════════════════════════════════
-   27. HOTKEY & AGENT INFO OVERLAYS
+   19. MODAL BOXES — HotKey, EA Comments
    ══════════════════════════════════════════════════════════════════════ */
 #HotKeyActionBox,
 #HotKeyEntriesBox {
-  background-color: var(--amber-bg) !important;
-  border:           1px solid var(--amber-bd) !important;
-  border-radius:    var(--r-lg) !important;
-  box-shadow:       var(--shadow-md) !important;
-  overflow:         hidden;
+  background: var(--amber-bg) !important;
+  border:     1px solid var(--amber-bd) !important;
+  border-radius: var(--r-lg) !important;
+  box-shadow: var(--sh-md) !important;
+  overflow:   hidden !important;
 }
 #HotKeyActionBox table,
-#HotKeyEntriesBox table {
-  background-color: var(--amber-bg) !important;
-  border-collapse:  collapse !important;
-}
+#HotKeyEntriesBox table { background: var(--amber-bg) !important; border-collapse: collapse !important; }
 #HotKeyActionBox td,
 #HotKeyEntriesBox td {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  color:       var(--amber) !important;
-  padding:     5px 9px !important;
+  font-family: var(--font) !important; font-size: 12px !important;
+  color: var(--amber) !important; padding: 5px 9px !important;
 }
 #HotKeyActionBox b,
-#HotKeyEntriesBox b {
-  font-size:   13px !important;
-  font-weight: 700 !important;
-}
+#HotKeyEntriesBox b { font-size: 13px !important; font-weight: 700 !important; }
 
-/* EA Comments box */
 #EAcommentsBox,
 #EAcommentsMinBox {
-  background-color: var(--surface) !important;
-  border:           1px solid var(--bd) !important;
-  border-radius:    var(--r-lg) !important;
-  box-shadow:       var(--shadow-md) !important;
-  overflow:         hidden;
+  background: var(--surface) !important;
+  border:     1px solid var(--bd) !important;
+  border-radius: var(--r-lg) !important;
+  box-shadow: var(--sh-md) !important;
 }
 #EAcommentsBox table,
-#EAcommentsMinBox table {
-  background-color: var(--surface) !important;
-  border-collapse:  collapse !important;
-}
+#EAcommentsMinBox table { background: var(--surface) !important; border-collapse: collapse !important; }
 #EAcommentsBox td,
 #EAcommentsMinBox td {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  color:       var(--tx) !important;
-  padding:     5px 9px !important;
+  font-family: var(--font) !important; font-size: 12px !important;
+  color: var(--tx) !important; padding: 5px 9px !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   28. AGENT STATS / TIMER / CALL LOG SPANS
+   20. SCRIPT PANEL
    ══════════════════════════════════════════════════════════════════════ */
-#AgentTimeSpan {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  color:       var(--tx-muted) !important;
-  letter-spacing: .2px;
-}
-
-#AgentTimeSpan b,
-#AgentTimeSpan strong {
-  color:       var(--tx) !important;
-  font-weight: 600 !important;
-}
-
-#CallLogLinkSpan a {
-  color:           var(--blue) !important;
-  font-size:       11px !important;
-  font-weight:     500 !important;
-  text-decoration: none !important;
-  font-family:     var(--font) !important;
-}
-#CallLogLinkSpan a:hover {
-  text-decoration: underline !important;
-}
-
-#PauseCodeLinkSpan a {
-  color:           var(--amber) !important;
-  font-size:       11px !important;
-  font-weight:     600 !important;
-  text-decoration: none !important;
-  font-family:     var(--font) !important;
-}
-#PauseCodeLinkSpan a:hover {
-  text-decoration: underline !important;
-}
-
-/* Call timer counter */
-#CallTimeSpan,
-#CallTiMerSpan {
-  font-family: var(--font) !important;
-  font-size:   13px !important;
-  font-weight: 700 !important;
-  color:       var(--tx) !important;
-  letter-spacing: 1px;
-}
-
-/* Agent personal queue counter */
-#AgentPersonalQueueSpan {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  color:       var(--blue) !important;
-  font-weight: 600;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   29. ADMIN MENU / REPORT LINKS
-   ══════════════════════════════════════════════════════════════════════ */
-.adminmenu_style_selected {
-  background-color: var(--surface) !important;
-  border-radius:    var(--r-s) !important;
-}
-.adminmenu_style_selected:hover {
-  background-color: var(--bg-alt) !important;
-}
-
-/* Admin nav table cells */
-table.admin_table td {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  color:       var(--tx) !important;
-  padding:     4px 8px !important;
-}
-table.admin_table a {
-  color:           var(--blue) !important;
-  text-decoration: none !important;
-  font-weight:     500 !important;
-}
-table.admin_table a:hover {
-  text-decoration: underline !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   30. TRANSFER PANEL — Comprehensive
-   ══════════════════════════════════════════════════════════════════════ */
-#TransferMain {
-  background-color: var(--bg) !important;
-  border-top:       1px solid var(--bd) !important;
-}
-
-/* Transfer panel inner tables */
-#TransferMain table {
-  border-collapse: collapse !important;
-}
-
-#TransferMain td {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  color:       var(--tx) !important;
-  padding:     3px 6px !important;
-  vertical-align: middle !important;
-}
-
-#TransferMain b {
-  font-size:   11px !important;
-  font-weight: 600 !important;
-  color:       var(--tx) !important;
-}
-
-/* Transfer heading row */
-#TransferMain td[bgcolor] {
-  background-color: var(--bg-alt) !important;
-  padding: 5px 8px !important;
-}
-
-/* Transfer type radio labels */
-#TransferMain .body_small,
-#TransferMain .body_text {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  color:       var(--tx) !important;
-}
-
-/* Conference/Transfer buttons inside transfer panel */
-#ConfCancelSpan > a,
-#ConfSendSpan > a,
-#XferSpan > a,
-#BlindXferSpan > a,
-#ConferencedHangup > a {
-  display:          inline-flex !important;
-  align-items:      center !important;
-  justify-content:  center !important;
-  min-width:        88px !important;
-  height:           26px !important;
-  border-radius:    var(--r) !important;
-  font-family:      var(--font) !important;
-  font-size:        10px !important;
-  font-weight:      600 !important;
-  letter-spacing:   .3px !important;
-  text-transform:   uppercase !important;
-  color:            #FFFFFF !important;
-  text-decoration:  none !important;
-  cursor:           pointer !important;
-  transition:       filter .12s, transform .08s;
-  padding:          0 10px !important;
-}
-#ConfSendSpan > a    { background-color: var(--btn-xfer) !important; }
-#XferSpan > a        { background-color: var(--btn-xfer) !important; }
-#BlindXferSpan > a   { background-color: var(--btn-neutral) !important; }
-#ConfCancelSpan > a  { background-color: var(--btn-hangup) !important; }
-#ConferencedHangup > a { background-color: var(--btn-hangup) !important; }
-
-#ConfCancelSpan > a:hover, #ConfSendSpan > a:hover,
-#XferSpan > a:hover, #BlindXferSpan > a:hover,
-#ConferencedHangup > a:hover { filter: brightness(.88); }
-
-#ConfCancelSpan > a:active, #ConfSendSpan > a:active,
-#XferSpan > a:active, #BlindXferSpan > a:active,
-#ConferencedHangup > a:active { transform: scale(.97); }
-
-/* ══════════════════════════════════════════════════════════════════════
-   31. EMAIL PANEL
-   ══════════════════════════════════════════════════════════════════════ */
-#EmailPanel,
-#EmailContents {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  color:       var(--tx) !important;
-  background:  var(--surface) !important;
-}
-
-#EmailPanel table {
-  border-collapse: collapse !important;
-}
-
-#EmailPanel td {
-  padding: 3px 6px !important;
-  vertical-align: middle !important;
-}
-
-#EmailPanel input[type="text"],
-#EmailPanel input[type="email"],
-#EmailPanel select,
-#EmailPanel textarea {
-  font-family:   var(--font) !important;
-  font-size:     11px !important;
-  height:        26px !important;
-  padding:       0 8px !important;
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  background:    var(--surface) !important;
-  color:         var(--tx) !important;
-  outline:       none;
-}
-#EmailPanel textarea {
-  height:  auto !important;
-  padding: 6px 8px !important;
-  resize:  vertical;
-}
-#EmailPanel input[type="text"]:focus,
-#EmailPanel input[type="email"]:focus,
-#EmailPanel select:focus,
-#EmailPanel textarea:focus {
-  border-color: var(--focus) !important;
-  box-shadow:   0 0 0 3px var(--focus-ring) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   32. CHAT PANEL
-   ══════════════════════════════════════════════════════════════════════ */
-#ChatDisplayPanel,
-#ChatContents {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  background:  var(--surface) !important;
-}
-
-/* Chat scroll boxes (already handled in section 15, reinforce) */
-div.scrolling,
-div.scrolling_transcript,
-div.scrolling_chat_display {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-}
-
-/* Chat send buttons */
-#ChatSendSpan > input,
-#ChatSendButton {
-  font-family:   var(--font) !important;
-  font-size:     10px !important;
-  font-weight:   600 !important;
-  height:        26px !important;
-  padding:       0 14px !important;
-  border:        none !important;
-  border-radius: var(--r) !important;
-  background:    var(--btn-dial) !important;
-  color:         #FFFFFF !important;
-  cursor:        pointer !important;
-}
-#ChatSendSpan > input:hover,
-#ChatSendButton:hover { filter: brightness(.88); }
-
-/* ══════════════════════════════════════════════════════════════════════
-   33. SCRIPT PANEL
-   ══════════════════════════════════════════════════════════════════════ */
-#ScriptContents {
-  background:  var(--surface) !important;
-  padding:     8px 12px !important;
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  color:       var(--tx) !important;
-  line-height: 1.6 !important;
-}
+#ScriptContents,
 #Script2Contents {
   background:  var(--surface) !important;
-  padding:     8px 12px !important;
+  padding:     10px 14px !important;
   font-family: var(--font) !important;
   font-size:   12px !important;
   color:       var(--tx) !important;
   line-height: 1.6 !important;
 }
-
-/* Script headings embedded in script content */
-#ScriptContents h1, #Script2Contents h1 {
-  font-size: 16px !important; color: var(--tx) !important;
-  font-family: var(--font) !important; margin: 0 0 8px !important;
-}
-#ScriptContents h2, #Script2Contents h2 {
-  font-size: 14px !important; color: var(--tx) !important;
-  font-family: var(--font) !important; margin: 0 0 6px !important;
-}
-#ScriptContents p, #Script2Contents p {
-  margin: 0 0 6px !important; line-height: 1.55 !important;
-}
-
-/* Script refresh link */
-#ScriptRefresH a {
-  color:           var(--blue) !important;
-  font-size:       10px !important;
-  font-weight:     500 !important;
-  text-decoration: none !important;
-  font-family:     var(--font) !important;
-}
-#ScriptRefresH a:hover { text-decoration: underline !important; }
+#ScriptContents h1, #Script2Contents h1 { font-size: 16px !important; font-family: var(--font) !important; }
+#ScriptContents h2, #Script2Contents h2 { font-size: 14px !important; font-family: var(--font) !important; }
+#ScriptContents p,  #Script2Contents p  { margin: 0 0 6px !important; }
 
 /* ══════════════════════════════════════════════════════════════════════
-   34. AGENT QUEUE DISPLAY (inbound queue stats)
-   ══════════════════════════════════════════════════════════════════════ */
-#InGroupSpan {
-  font-family: var(--font) !important;
-  font-size:   10px !important;
-  color:       var(--tx-muted) !important;
-}
-#InGroupSpan b {
-  color:       var(--tx) !important;
-  font-weight: 600 !important;
-}
-
-/* Queue wait count indicators */
-.queue_text_red {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  font-weight: 700 !important;
-  color:       var(--red) !important;
-}
-.queue_text {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-  color:       var(--tx) !important;
-  text-decoration: none !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   35. CHECKBOX AND RADIO INPUTS
-   ══════════════════════════════════════════════════════════════════════ */
-input[type="checkbox"],
-input[type="radio"] {
-  accent-color:  var(--focus) !important;
-  width:         14px !important;
-  height:        14px !important;
-  cursor:        pointer !important;
-  vertical-align: middle !important;
-}
-
-/* Lead preview / alt phone checkboxes — in sidebar dark bg */
-#MainTable td[width="150px"] input[type="checkbox"] {
-  accent-color: var(--hd-link) !important;
-  width:        13px !important;
-  height:       13px !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   36. CALL STATUS BANNER — dynamic background classes from JS
-   JS sets: style.backgroundColor on #MainStatuSSpan or its parent.
-   We ensure the text inside is always legible.
-   ══════════════════════════════════════════════════════════════════════ */
-/* When the status bar is dark/colored, force white text */
-#MainStatuSSpan[style*="background"] font,
-#MainStatuSSpan[style*="background"] b {
-  font-family: var(--font) !important;
-  font-weight: 700 !important;
-}
-
-/* Specific known VICIdial status colors → refined palette */
-/* PAUSED — yellow #FFFF00 in legacy → replace with amber */
-#MainStatuSSpan[style*="FF0"] {
-  background-color: var(--amber-bg) !important;
-  color:            var(--amber) !important;
-  border-bottom-color: var(--amber-bd) !important;
-}
-/* READY — green tones */
-#MainStatuSSpan[style*="00CC"],
-#MainStatuSSpan[style*="00FF"],
-#MainStatuSSpan[style*="99FF"],
-#MainStatuSSpan[style*="CCFF"] {
-  background-color: var(--green-bg) !important;
-  color:            var(--green) !important;
-  border-bottom-color: var(--green-bd) !important;
-}
-/* INCALL — blue tones */
-#MainStatuSSpan[style*="0000FF"],
-#MainStatuSSpan[style*="6666"],
-#MainStatuSSpan[style*="9999FF"],
-#MainStatuSSpan[style*="CCCCFF"] {
-  background-color: var(--blue-bg) !important;
-  color:            var(--blue) !important;
-  border-bottom-color: var(--blue-bd) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   37. GENERAL BUTTONS (input[type=button] in content area)
-   ══════════════════════════════════════════════════════════════════════ */
-#MainPanelCustInfo input[type="button"],
-#MainPanel input[type="button"]:not([id*="Dial"]):not([id*="Hangup"]):not([id*="Record"]):not([id*="Park"]):not([id*="Xfer"]):not([id*="Web"]) {
-  font-family:   var(--font) !important;
-  font-size:     11px !important;
-  font-weight:   600 !important;
-  height:        26px !important;
-  padding:       0 12px !important;
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--r) !important;
-  background:    var(--surface) !important;
-  color:         var(--tx) !important;
-  cursor:        pointer !important;
-  transition:    background .12s, border-color .12s;
-}
-#MainPanelCustInfo input[type="button"]:hover,
-#MainPanel input[type="button"]:hover {
-  background:   var(--bg-alt) !important;
-  border-color: var(--bd-dark) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   38. MUTE / HOLD INDICATOR — in sidebar
-   ══════════════════════════════════════════════════════════════════════ */
-#RecorDMute {
-  display:        inline-flex !important;
-  align-items:    center !important;
-  justify-content: center !important;
-  min-width:      80px !important;
-  height:         22px !important;
-  border-radius:  var(--r-s) !important;
-  font-family:    var(--font) !important;
-  font-size:      9px !important;
-  font-weight:    700 !important;
-  letter-spacing: .5px !important;
-  text-transform: uppercase !important;
-  color:          var(--sb-text) !important;
-  background:     rgba(255,255,255,.07) !important;
-  border:         1px solid rgba(255,255,255,.12) !important;
-  margin:         2px auto !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   39. RECORDING FILE & RECORD ID — sidebar info badges
-   ══════════════════════════════════════════════════════════════════════ */
-#RecorDingFilenameDiv,
-#RecorDIDdiv {
-  display:        flex !important;
-  flex-direction: column !important;
-  align-items:    flex-start !important;
-  gap:            1px !important;
-  padding:        4px 5px !important;
-  margin:         2px 0 !important;
-  background:     rgba(255,255,255,.05) !important;
-  border-radius:  var(--r-s) !important;
-  border-left:    2px solid rgba(96,165,250,.4) !important;
-  width:          138px !important;
-  box-sizing:     border-box !important;
-}
-
-#RecorDingFilename,
-#RecorDID {
-  display:     block !important;
-  word-break:  break-all !important;
-  line-height: 1.3 !important;
-  color:       var(--sb-text) !important;
-  font-size:   9px !important;
-  font-family: var(--font) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   40. SIDEBAR SECTION LABELS — category headings between button groups
-   ══════════════════════════════════════════════════════════════════════ */
-#MainTable td[width="150px"] .skb_text,
-#MainTable td[width="150px"] .sh_text {
-  display:        block !important;
-  color:          var(--sb-muted) !important;
-  font-size:      9px !important;
-  font-weight:    600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .8px !important;
-  font-family:    var(--font) !important;
-  padding:        8px 0 3px !important;
-  border-top:     1px solid var(--sb-divider) !important;
-  margin-top:     4px !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   41. SIDEBAR DIVIDER — thin rule between button groups
-   ══════════════════════════════════════════════════════════════════════ */
-#MainTable td[width="150px"] hr,
-#MainTable td[width="150px"] .body_small[style*="margin"] {
-  border: none !important;
-  border-top: 1px solid var(--sb-divider) !important;
-  margin: 6px 0 !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   42. LOG PANEL STYLING
-   ══════════════════════════════════════════════════════════════════════ */
-.log_text {
-  background:  var(--bg) !important;
-  border:      1px solid var(--bd) !important;
-  border-radius: var(--r-s) !important;
-  padding:     2px 5px !important;
-  font-size:   11px !important;
-  color:       var(--tx-muted) !important;
-  line-height: 1.5;
-}
-.log_text_red {
-  background:    var(--red-bg) !important;
-  border:        1px solid var(--red-bd) !important;
-  border-radius: var(--r-s) !important;
-  padding:       2px 5px !important;
-  font-size:     11px !important;
-  color:         var(--red) !important;
-  font-weight:   700 !important;
-}
-.log_title {
-  font-size:   12px !important;
-  font-weight: 700 !important;
-  color:       var(--tx) !important;
-  font-family: var(--font) !important;
-  padding:     4px 0 2px !important;
-  display:     block !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   43. MAIN COMMIT BUTTON AREA
-   ══════════════════════════════════════════════════════════════════════ */
-#MainCommit {
-  font-family: var(--font) !important;
-  font-size:   12px !important;
-}
-
-#MainCommit input[type="button"],
-#MainCommit input[type="submit"] {
-  font-family:   var(--font) !important;
-  font-size:     12px !important;
-  font-weight:   600 !important;
-  height:        30px !important;
-  padding:       0 18px !important;
-  border:        none !important;
-  border-radius: var(--r) !important;
-  background:    var(--btn-dial) !important;
-  color:         #FFFFFF !important;
-  cursor:        pointer !important;
-  letter-spacing: .3px;
-  transition:    filter .12s, transform .08s;
-}
-#MainCommit input[type="button"]:hover,
-#MainCommit input[type="submit"]:hover { filter: brightness(.88); }
-#MainCommit input[type="button"]:active,
-#MainCommit input[type="submit"]:active { transform: scale(.97); }
-
-/* ══════════════════════════════════════════════════════════════════════
-   44. AGENT VIEW PANEL (right side agent stats)
+   21. AGENT VIEW / FOOTER
    ══════════════════════════════════════════════════════════════════════ */
 #AgentViewSpan {
   background-color: var(--bg) !important;
   border-left:      1px solid var(--bd) !important;
 }
-#AgentViewSpan table {
-  border-collapse: collapse !important;
-  width:           100% !important;
-}
+#AgentViewSpan table { border-collapse: collapse !important; width: 100% !important; }
 #AgentViewSpan td {
-  font-family:  var(--font) !important;
-  font-size:    11px !important;
-  color:        var(--tx) !important;
-  padding:      3px 7px !important;
+  font-family:   var(--font) !important;
+  font-size:     11px !important;
+  color:         var(--tx) !important;
+  padding:       3px 7px !important;
   border-bottom: 1px solid var(--bg-alt) !important;
 }
-#AgentViewSpan b {
-  color:       var(--tx) !important;
-  font-weight: 600 !important;
+
+#MaiNfooterspan,
+#MaiNfooter { background-color: var(--bg) !important; }
+#MaiNfooterspan font,
+#MaiNfooter font {
+  font-family: var(--font) !important;
+  font-size:   10px !important;
+  color:       var(--tx-light) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   45. KEYFRAME ANIMATIONS
+   22. CHAT CONTAINERS
    ══════════════════════════════════════════════════════════════════════ */
+div.scrolling,
+div.scrolling_transcript,
+div.scrolling_chat_display {
+  border:        1px solid var(--bd) !important;
+  border-radius: var(--r) !important;
+  background:    var(--surface) !important;
+  font-family:   var(--font) !important;
+  font-size:     11px !important;
+}
 
-/* Override legacy blink with smoother pulse */
+/* ══════════════════════════════════════════════════════════════════════
+   23. ADMIN MENU
+   ══════════════════════════════════════════════════════════════════════ */
+.adminmenu_style_selected {
+  background-color: var(--surface) !important;
+  border-radius:    var(--r-sm) !important;
+}
+.adminmenu_style_selected:hover {
+  background-color: var(--bg-alt) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   24. CHECKBOXES & RADIOS
+   ══════════════════════════════════════════════════════════════════════ */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color:  var(--bd-focus) !important;
+  width:         13px !important;
+  height:        13px !important;
+  cursor:        pointer !important;
+  vertical-align: middle !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   25. BLINK ANIMATION — smooth pulse replaces hard blink
+   ══════════════════════════════════════════════════════════════════════ */
 .blink {
   animation: vf-pulse 1.4s ease-in-out infinite !important;
-  -webkit-animation: vf-pulse 1.4s ease-in-out infinite !important;
 }
-
 @keyframes vf-pulse {
-  0%   { opacity: 1;   }
-  50%  { opacity: .35; }
-  100% { opacity: 1;   }
-}
-@-webkit-keyframes vf-pulse {
-  0%   { opacity: 1;   }
-  50%  { opacity: .35; }
-  100% { opacity: 1;   }
-}
-
-/* Fade-in for panels JS makes visible */
-@keyframes vf-fadein {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-@-webkit-keyframes vf-fadein {
-  from { opacity: 0; -webkit-transform: translateY(-4px); }
-  to   { opacity: 1; -webkit-transform: translateY(0);    }
-}
-
-#WrapupBox, #TransferMain, #HotKeyActionBox {
-  animation: vf-fadein .18s ease-out;
-  -webkit-animation: vf-fadein .18s ease-out;
-}
-
-/* Button press ripple */
-@keyframes vf-press {
-  0%   { transform: scale(1);    }
-  50%  { transform: scale(.96);  }
-  100% { transform: scale(1);    }
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: .25; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   46. FOCUS-VISIBLE OUTLINE — keyboard accessibility
+   26. FOCUS & SELECTION
    ══════════════════════════════════════════════════════════════════════ */
 :focus-visible {
-  outline:        2px solid var(--focus) !important;
+  outline:        2px solid var(--bd-focus) !important;
   outline-offset: 2px !important;
 }
-:focus:not(:focus-visible) {
-  outline: none !important;
-}
+:focus:not(:focus-visible) { outline: none !important; }
 
-/* ══════════════════════════════════════════════════════════════════════
-   47. SELECTION COLOR
-   ══════════════════════════════════════════════════════════════════════ */
 ::selection {
-  background: var(--focus-ring);
+  background: var(--blue-bg);
   color:      var(--tx);
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   48. PHONE PANEL — Additional (SIP phone, softphone controls)
+   27. WEBKIT SCROLLBARS
    ══════════════════════════════════════════════════════════════════════ */
-#SIPphonePanel,
-#SIPphoneTable {
-  background-color: var(--surface) !important;
-}
-#SIPphonePanel td,
-#SIPphoneTable td {
-  font-family: var(--font) !important;
-  font-size:   11px !important;
-  color:       var(--tx) !important;
-  padding:     2px 5px !important;
-}
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: var(--bd); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--tx-light); }
 
-/* SIP registration status */
-#SIPstatus,
-#SIPstatusSpan {
-  font-family:  var(--font) !important;
-  font-size:    10px !important;
-  font-weight:  600 !important;
-  padding:      2px 8px !important;
-  border-radius: var(--r-s) !important;
-}
+/* ══════════════════════════════════════════════════════════════════════
+   28. RESPONSIVE — Small screens (13" laptops, ~1280px wide)
+   Scale down fonts and button dimensions proportionally.
+   Layout stays absolute-positioned (JS-controlled), we only scale content.
+   ══════════════════════════════════════════════════════════════════════ */
+@media screen and (max-width: 1366px) {
+  :root {
+    --btn-h:   25px;
+    --btn-w:   132px;
+    --btn-fs:  10px;
+  }
+  body { font-size: 11px !important; }
 
-/* Volume / audio controls */
-#MuteSpan,
-#VolSpan {
-  font-family: var(--font) !important;
-  font-size:   10px !important;
-  color:       var(--tx-muted) !important;
+  input.cust_form,
+  select.cust_form,
+  #xfernumber,
+  #XfeRGrouP {
+    height:    24px !important;
+    font-size: 11px !important;
+    padding:   0 8px !important;
+  }
+  textarea.cust_form,
+  textarea.cust_form_text {
+    font-size: 11px !important;
+    padding:   5px 8px !important;
+  }
+  #Header font,
+  #Header .body_text { font-size: 10px !important; }
+
+  #MainStatuSSpan {
+    font-size: 10px !important;
+    padding:   4px 8px !important;
+  }
+
+  #MainTable td[width="150px"] {
+    padding: 6px 5px 10px !important;
+  }
+
+  #DiaLControl,
+  #HangupControl,
+  #RecorDControl,
+  #ParkControl,
+  #ivrParkControl,
+  #XferControl,
+  #QuickXfer,
+  #CustomXfer,
+  #WebFormSpan,
+  #WebFormSpanTwo,
+  #WebFormSpanThree {
+    height:        var(--btn-h) !important;
+    width:         var(--btn-w) !important;
+    margin-bottom: 3px !important;
+  }
+
+  #DiaLControl::after, #HangupControl::after, #RecorDControl::after,
+  #ParkControl::after, #ivrParkControl::after, #XferControl::after,
+  #QuickXfer::after, #CustomXfer::after,
+  #WebFormSpan::after, #WebFormSpanTwo::after, #WebFormSpanThree::after {
+    font-size: var(--btn-fs) !important;
+  }
+
+  #NexTCalLPausE {
+    width:     var(--btn-w) !important;
+    min-height: 23px !important;
+  }
+
+  #SendDTMF > a  { width: 64px !important; height: var(--btn-h) !important; }
+  #conf_dtmf     { width: 56px !important; height: var(--btn-h) !important; }
+
+  #RecorDingFilename,
+  #RecorDID { width: var(--btn-w) !important; }
+
+  #WrapupBox td,
+  #FSCREENWrapupBox td { font-size: 11px !important; padding: 4px 8px !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   49. ADDITIONAL SIDEBAR BUTTON STATES — hover transitions
-   Reinforce smooth UX for all sidebar button spans
+   29. RESPONSIVE — 15" laptops (~1440–1600px) — default tokens work well
+   Minor refinements for this range.
    ══════════════════════════════════════════════════════════════════════ */
-#DiaLControl,   #HangupControl, #RecorDControl,
-#ParkControl,   #ivrParkControl, #XferControl,
-#QuickXfer,     #CustomXfer,
-#WebFormSpan,   #WebFormSpanTwo, #WebFormSpanThree,
-#ReQueueCall,   #StRecorDControl {
-  transition: filter .14s ease, transform .08s ease, box-shadow .14s ease !important;
-}
-
-/* Disabled state — JS sometimes adds opacity or pointer-events:none */
-#DiaLControl[style*="opacity"],
-#HangupControl[style*="opacity"],
-#RecorDControl[style*="opacity"],
-#XferControl[style*="opacity"] {
-  cursor: not-allowed !important;
+@media screen and (min-width: 1367px) and (max-width: 1600px) {
+  :root {
+    --btn-h:  27px;
+    --btn-w:  134px;
+    --btn-fs: 10px;
+  }
+  input.cust_form,
+  select.cust_form { height: 26px !important; font-size: 12px !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   50. PRINT — Extended
+   30. RESPONSIVE — Large monitors (27", 1920px+)
+   Increase scale for readability on high-res screens.
+   ══════════════════════════════════════════════════════════════════════ */
+@media screen and (min-width: 1921px) {
+  :root {
+    --btn-h:   32px;
+    --btn-w:   150px;
+    --btn-fs:  12px;
+  }
+
+  body { font-size: 13px !important; }
+
+  #Header font,
+  #Header .body_text { font-size: 12px !important; }
+
+  #MainStatuSSpan {
+    font-size: 13px !important;
+    padding:   7px 14px !important;
+  }
+
+  #MainTable td[width="150px"] {
+    padding: 12px 9px 16px !important;
+  }
+
+  input.cust_form,
+  select.cust_form {
+    height:    30px !important;
+    font-size: 13px !important;
+    padding:   0 11px !important;
+  }
+  textarea.cust_form,
+  textarea.cust_form_text {
+    font-size: 13px !important;
+    padding:   8px 11px !important;
+  }
+
+  #DiaLControl::after, #HangupControl::after, #RecorDControl::after,
+  #ParkControl::after, #ivrParkControl::after, #XferControl::after,
+  #QuickXfer::after, #CustomXfer::after,
+  #WebFormSpan::after, #WebFormSpanTwo::after, #WebFormSpanThree::after {
+    font-size: var(--btn-fs) !important;
+  }
+
+  #NexTCalLPausE {
+    width:     var(--btn-w) !important;
+    min-height: 28px !important;
+  }
+  #NexTCalLPausE font,
+  #NexTCalLPausE .body_small,
+  #NexTCalLPausE a { font-size: 11px !important; }
+
+  #SendDTMF > a  { width: 80px !important; height: var(--btn-h) !important; font-size: 11px !important; }
+  #conf_dtmf     { width: 68px !important; height: var(--btn-h) !important; font-size: 12px !important; }
+
+  #RecorDingFilename,
+  #RecorDID {
+    width:     var(--btn-w) !important;
+    font-size: 10px !important;
+  }
+
+  .body_text   { font-size: 13px !important; }
+  .body_small  { font-size: 12px !important; }
+  .body_tiny   { font-size: 11px !important; }
+  .queue_text  { font-size: 12px !important; }
+
+  #WrapupBox td,
+  #FSCREENWrapupBox td { font-size: 13px !important; padding: 7px 12px !important; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   31. PRINT
    ══════════════════════════════════════════════════════════════════════ */
 @media print {
   #Header, #Tabs, #MaiNfooterspan,
   #MainTable td[width="150px"],
-  #TransferMain,
-  #WrapupBox, #FSCREENWrapupBox,
-  #HotKeyActionBox { display: none !important; }
+  #TransferMain, #WrapupBox,
+  #FSCREENWrapupBox, #HotKeyActionBox { display: none !important; }
 
-  #MainPanelCustInfo {
-    width: 100% !important;
-    font-size: 12pt !important;
-  }
+  #MainPanelCustInfo { width: 100% !important; font-size: 12pt !important; }
   input.cust_form,
   textarea.cust_form,
   select.cust_form {
