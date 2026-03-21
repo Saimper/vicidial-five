@@ -1,216 +1,437 @@
 /* =============================================================================
-   VICIDIAL-FIVE — Corporate Light Theme
-   Target: agc/vicidial.php — ZONA AMARILLA
-   Rule: ADD only. Never override layout/positioning. Target leaf elements only.
+   VICIDIAL-FIVE — Corporate Light Theme v3
+   Target: agc/vicidial.php  |  Zona Amarilla
+   Strategy: Leaf-element targeting only. No borders on positioned containers.
+             No table[bgcolor] attribute selectors. No filters on images.
    ============================================================================= */
 
 /* --- Design tokens --------------------------------------------------------- */
 :root {
-  --color-primary:       #1E3A5F;
-  --color-primary-hover: #264F80;
-  --color-surface:       #FFFFFF;
-  --color-bg:            #F1F4F8;
-  --color-bg-subtle:     #E8ECF1;
-  --color-border:        #D0D7E2;
-  --color-text:          #0F1C2E;
-  --color-text-muted:    #4A5770;
-  --color-text-light:    #6B7A95;
-  --color-success:       #14532D;
-  --color-success-bg:    #DCFCE7;
-  --color-danger:        #7F1D1D;
-  --color-danger-bg:     #FEE2E2;
-  --color-warning:       #78350F;
-  --color-warning-bg:    #FEF3C7;
-  --color-accent:        #1D4ED8;
-  --font-base:           -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
-  --radius:              4px;
+  --font:         -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+
+  /* Header / nav */
+  --nav-bg:       #1B3A5C;
+  --nav-text:     #E8F1FA;
+  --nav-link:     #93C5FD;
+
+  /* Surfaces */
+  --surface:      #FFFFFF;
+  --bg:           #F7FAFC;
+  --bg-alt:       #EDF2F7;
+  --bg-subtle:    #E2E8F0;
+
+  /* Borders & focus */
+  --border:       #CBD5E0;
+  --border-dark:  #A0AEC0;
+  --focus-ring:   #3182CE;
+
+  /* Text */
+  --text:         #1A202C;
+  --text-muted:   #4A5568;
+  --text-light:   #718096;
+
+  /* Semantic */
+  --green:        #276749;
+  --green-bg:     #F0FFF4;
+  --red:          #9B2C2C;
+  --red-bg:       #FFF5F5;
+  --amber:        #92400E;
+  --amber-bg:     #FFFBEB;
+  --blue:         #1D4ED8;
+  --blue-bg:      #EFF6FF;
+
+  --radius:       5px;
+  --radius-sm:    3px;
 }
 
-/* --- Global ---------------------------------------------------------------- */
+/* ============================================================
+   GLOBAL
+   ============================================================ */
 body {
-  font-family: var(--font-base) !important;
-  color: var(--color-text);
+  font-family: var(--font) !important;
+  background: var(--bg) !important;
 }
 
-/* --- Typography — safe to override, these are only text-styling classes ---- */
-.body_text, .body_small, .body_small_bold,
-.body_tiny, .sb_text, .sk_text, .skb_text,
-.sh_text, .sd_text, .log_text, .log_title,
-.cust_form, .cust_form_text, .loading_text {
-  font-family: var(--font-base) !important;
+/* ============================================================
+   HEADER BAR  (top: 0px — "Logged in as… LOGOUT")
+   ONLY colors & text. NEVER add padding/border/height here
+   because the Tabs span starts at top:13px and must align.
+   ============================================================ */
+#Header table {
+  background-color: var(--nav-bg) !important;
 }
 
-.body_text       { font-size: 12px; color: var(--color-text); }
-.body_small      { font-size: 11px; color: var(--color-text); }
-.body_small_bold { font-size: 11px; color: var(--color-text); font-weight: 600; }
-.body_tiny       { font-size: 10px; color: var(--color-text-muted); }
-.sb_text         { font-size: 11px; color: var(--color-text); }
-.sk_text         { font-size: 11px; color: var(--color-text-muted); }
-.skb_text        { font-size: 12px; color: var(--color-text); font-weight: 600; }
-.sh_text         { font-size: 13px; color: var(--color-text); font-weight: 600; }
-.sh_text_white   { font-size: 13px; color: #FFFFFF; font-weight: 600; }
-.log_text        { font-size: 11px; color: var(--color-text-muted); }
-.log_title       { font-size: 12px; color: var(--color-text); font-weight: 600; }
-.loading_text    { font-size: 16px; color: var(--color-text-muted); }
-
-/* --- Buttons — safe, these are form controls not layout elements ----------- */
-input.red_btn {
-  font-family: var(--font-base) !important;
-  font-size: 10px; font-weight: 600;
-  color: #FFFFFF;
-  background-color: #B91C1C !important;
-  border: 1px solid #991B1B !important;
-  border-radius: var(--radius);
-  padding: 3px 8px;
-  cursor: pointer;
+#Header font,
+#Header .queue_text,
+#Header .body_text {
+  color: var(--nav-text) !important;
+  font-family: var(--font) !important;
+  font-size: 11px;
 }
 
-input.green_btn {
-  font-family: var(--font-base) !important;
-  font-size: 10px; font-weight: 600;
-  color: #FFFFFF;
-  background-color: #15803D !important;
-  border: 1px solid #166534 !important;
-  border-radius: var(--radius);
-  padding: 3px 8px;
-  cursor: pointer;
+#Header a {
+  color: var(--nav-link) !important;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+}
+#Header a:hover { color: #FFFFFF !important; }
+
+/* ============================================================
+   TABS ROW  (top: 13px — GIF image tabs)
+   Keep background light — the GIFs were designed for light bg.
+   ============================================================ */
+#Tabs > table {
+  background-color: #F0F4F8 !important;
+  border-bottom: 2px solid var(--border-dark) !important;
 }
 
-input.blue_btn {
-  font-family: var(--font-base) !important;
-  font-size: 10px; font-weight: 600;
-  color: #FFFFFF;
-  background-color: #1D4ED8 !important;
-  border: 1px solid #1E40AF !important;
-  border-radius: var(--radius);
-  padding: 3px 8px;
-  cursor: pointer;
+/* WhatsApp & CRM anchors we added */
+#Tabs td[style*="25D366"] { background-color: #166534 !important; }
+#Tabs td[style*="0057B7"] { background-color: #1D4ED8 !important; }
+
+/* Session info text in the status td */
+#Tabs span#status {
+  color: var(--green) !important;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .4px;
+}
+#Tabs .body_tiny { color: var(--text-muted) !important; }
+#Tabs .body_text { color: var(--text-muted) !important; font-size: 11px; }
+
+/* ============================================================
+   MAIN PANEL  (top: 46px — 3-column agent layout)
+   Only target #MainTable — NOT "#MainPanel table" (too broad).
+   ============================================================ */
+#MainTable {
+  background-color: var(--surface) !important;
 }
 
-input.tiny_red_btn {
-  font-family: var(--font-base) !important;
-  font-size: 9px; font-weight: 600;
-  color: #FFFFFF;
-  background-color: #B91C1C !important;
-  border: 1px solid #991B1B !important;
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
-input.tiny_blue_btn {
-  font-family: var(--font-base) !important;
-  font-size: 9px; font-weight: 600;
-  color: #FFFFFF;
-  background-color: #1D4ED8 !important;
-  border: 1px solid #1E40AF !important;
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
-input.tiny_yellow_btn {
-  font-family: var(--font-base) !important;
-  font-size: 9px; font-weight: 600;
-  color: var(--color-text);
-  background-color: #FCD34D !important;
-  border: 1px solid #D97706 !important;
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
-input.tiny_green_btn {
-  font-family: var(--font-base) !important;
-  font-size: 9px; font-weight: 600;
-  color: #FFFFFF;
-  background-color: #15803D !important;
-  border: 1px solid #166534 !important;
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
-.button_active {
-  font-family: var(--font-base) !important;
+/* Status bar inside main panel top row */
+#MainStatuSSpan {
+  font-family: var(--font) !important;
   font-size: 12px;
-  background-color: #15803D !important;
-  border: 1px solid #166534 !important;
-  border-radius: var(--radius);
-  padding: 6px 16px;
-  color: #FFFFFF;
+  font-weight: 600;
+  color: var(--text) !important;
 }
 
-.button_inactive {
-  font-family: var(--font-base) !important;
-  font-size: 12px;
-  background-color: #6B7280 !important;
-  border: 1px solid #4B5563 !important;
-  border-radius: var(--radius);
-  padding: 6px 16px;
-  color: #FFFFFF;
-  opacity: 0.55;
-  cursor: not-allowed;
+/* ============================================================
+   LEFT COLUMN CONTROL BACKGROUNDS
+   These spans have inline style="background-color:…"
+   We override their BG only — no dimensions touched.
+   ============================================================ */
+#DiaLControl                { background-color: var(--green-bg)  !important; }
+#HangupControl              { background-color: var(--red-bg)    !important; }
+#RecorDControl,
+#RecorDMute,
+#StRecorDControl,
+#ParkControl,
+#ivrParkControl,
+#XferControl,
+#QuickXfer,
+#CustomXfer,
+#SendDTMF,
+#ReQueueCall,
+#WebFormSpan,
+#WebFormSpanTwo,
+#WebFormSpanThree           { background-color: var(--surface)   !important; }
+
+/* ============================================================
+   CUSTOMER FORM INPUTS
+   Targeted by ID — safest approach, no side-effects on layout.
+   ============================================================ */
+#title,
+#first_name,
+#middle_initial,
+#last_name,
+#address1,
+#address2,
+#address3,
+#city,
+#state,
+#postal_code,
+#province,
+#vendor_lead_code,
+#phone_number,
+#phone_code,
+#alt_phone,
+#security_phrase,
+#email,
+#other_tab_comments,
+#xfernumber,
+#conf_dtmf {
+  font-family: var(--font) !important;
+  font-size: 12px !important;
+  padding: 5px 9px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  transition: border-color .15s, box-shadow .15s;
+  box-sizing: border-box;
 }
 
-/* --- Form inputs — safe, leaf elements ------------------------------------- */
+#title:focus,
+#first_name:focus,
+#middle_initial:focus,
+#last_name:focus,
+#address1:focus,
+#address2:focus,
+#address3:focus,
+#city:focus,
+#state:focus,
+#postal_code:focus,
+#province:focus,
+#vendor_lead_code:focus,
+#phone_number:focus,
+#phone_code:focus,
+#alt_phone:focus,
+#security_phrase:focus,
+#email:focus,
+#other_tab_comments:focus,
+#xfernumber:focus,
+#conf_dtmf:focus {
+  border-color: var(--focus-ring) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(49,130,206,.18);
+}
+
+/* Textareas */
+#comments,
+#call_notes {
+  font-family: var(--font) !important;
+  font-size: 12px !important;
+  padding: 5px 9px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  resize: vertical;
+  box-sizing: border-box;
+}
+#comments:focus,
+#call_notes:focus {
+  border-color: var(--focus-ring) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(49,130,206,.18);
+}
+
+/* Select dropdowns in customer form */
+#gender_list,
+#XfeRGrouP {
+  font-family: var(--font) !important;
+  font-size: 12px !important;
+  padding: 4px 7px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+/* ============================================================
+   FORM_FIELD CLASS  (transfer panel, admin overlays)
+   ============================================================ */
 input.form_field,
 textarea.form_field,
 select.form_field {
-  font-family: var(--font-base) !important;
-  font-size: 11px;
-  background-color: #FFFFFF !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius);
-  padding: 3px 6px;
-  color: var(--color-text);
+  font-family: var(--font) !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
 }
-
 input.form_field:focus,
 textarea.form_field:focus,
 select.form_field:focus {
-  border-color: var(--color-accent) !important;
+  border-color: var(--focus-ring) !important;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(29,78,216,.12);
+  box-shadow: 0 0 0 3px rgba(49,130,206,.18);
 }
 
+/* Chat textarea */
 textarea.chat_box {
-  font-family: var(--font-base) !important;
+  font-family: var(--font) !important;
   font-size: 11px;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius);
-  padding: 3px 6px;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  padding: 4px 8px !important;
 }
 
-/* --- Status text / queue display ------------------------------------------ */
-.preview_text     { background: var(--color-success-bg); color: var(--color-success); }
-.preview_text_red { background: var(--color-danger-bg);  color: var(--color-danger); }
-.queue_text_red   { color: var(--color-danger); }
-.queue_text       { color: var(--color-text); text-decoration: none; }
+/* ============================================================
+   BUTTONS  (CSS-rendered — not the GIF image buttons)
+   ============================================================ */
+input.red_btn {
+  font-family: var(--font) !important; font-size: 10px; font-weight: 600;
+  color: #FFF; background: #C53030 !important;
+  border: 1px solid #9B2C2C !important;
+  border-radius: var(--radius); padding: 3px 10px; cursor: pointer;
+}
+input.green_btn {
+  font-family: var(--font) !important; font-size: 10px; font-weight: 600;
+  color: #FFF; background: #276749 !important;
+  border: 1px solid #1C5032 !important;
+  border-radius: var(--radius); padding: 3px 10px; cursor: pointer;
+}
+input.blue_btn {
+  font-family: var(--font) !important; font-size: 10px; font-weight: 600;
+  color: #FFF; background: #1D4ED8 !important;
+  border: 1px solid #1E40AF !important;
+  border-radius: var(--radius); padding: 3px 10px; cursor: pointer;
+}
+input.tiny_red_btn {
+  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
+  color: #FFF; background: #C53030 !important;
+  border: 1px solid #9B2C2C !important;
+  border-radius: var(--radius-sm); cursor: pointer;
+}
+input.tiny_blue_btn {
+  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
+  color: #FFF; background: #1D4ED8 !important;
+  border: 1px solid #1E40AF !important;
+  border-radius: var(--radius-sm); cursor: pointer;
+}
+input.tiny_yellow_btn {
+  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
+  color: var(--text); background: #F6C443 !important;
+  border: 1px solid #B45309 !important;
+  border-radius: var(--radius-sm); cursor: pointer;
+}
+input.tiny_green_btn {
+  font-family: var(--font) !important; font-size: 9px; font-weight: 600;
+  color: #FFF; background: #276749 !important;
+  border: 1px solid #1C5032 !important;
+  border-radius: var(--radius-sm); cursor: pointer;
+}
+.button_active {
+  font-family: var(--font) !important; font-size: 12px;
+  background: #276749 !important; border: 1px solid #1C5032 !important;
+  border-radius: var(--radius); padding: 5px 14px; color: #FFF;
+}
+.button_inactive {
+  font-family: var(--font) !important; font-size: 12px;
+  background: #718096 !important; border: 1px solid #4A5568 !important;
+  border-radius: var(--radius); padding: 5px 14px; color: #FFF;
+  opacity: .55; cursor: not-allowed;
+}
 
-.ON_conf  { background: #FEF9C3; color: var(--color-warning); font-family: var(--font-base); }
-.OFF_conf { background: #FEF3C7; color: var(--color-text-muted); font-family: var(--font-base); }
+/* ============================================================
+   TYPOGRAPHY — all text/label classes
+   ============================================================ */
+.body_text, .body_small, .body_small_bold, .body_tiny,
+.sb_text, .sk_text, .skb_text, .sh_text, .sd_text,
+.log_text, .log_title, .loading_text,
+.cust_form, .cust_form_text, .queue_text {
+  font-family: var(--font) !important;
+}
 
-/* --- Chat scrolling divs — safe, self-contained elements ------------------ */
+.body_text        { font-size: 12px; color: var(--text);        }
+.body_small       { font-size: 11px; color: var(--text);        }
+.body_small_bold  { font-size: 11px; color: var(--text);    font-weight: 600; }
+.body_tiny        { font-size: 10px; color: var(--text-muted);  }
+.sb_text          { font-size: 11px; color: var(--text);        }
+.sk_text          { font-size: 11px; color: var(--text-muted);  }
+.skb_text         { font-size: 12px; color: var(--text);    font-weight: 600; }
+.sh_text          { font-size: 13px; color: var(--text);    font-weight: 600; }
+.sh_text_white    { font-size: 13px; color: #FFFFFF;         font-weight: 600; }
+.log_text         { font-size: 11px; color: var(--text-muted);  }
+.log_title        { font-size: 12px; color: var(--text);    font-weight: 600; }
+.loading_text     { font-size: 15px; color: var(--text-muted);  }
+.queue_text       { font-size: 11px; color: var(--text);    text-decoration: none; }
+.queue_text_red   { font-size: 12px; color: var(--red);     font-weight: 700; }
+
+/* ============================================================
+   STATUS / SEMANTIC CLASSES
+   ============================================================ */
+.preview_text     { background: var(--green-bg); color: var(--green); font-family: var(--font) !important; }
+.preview_text_red { background: var(--red-bg);   color: var(--red);   font-family: var(--font) !important; }
+.ON_conf          { background: #FEFCE8; color: var(--amber); font-family: var(--font) !important; }
+.OFF_conf         { background: var(--bg-alt); color: var(--text-muted); font-family: var(--font) !important; }
+
+/* ============================================================
+   LINKS (main panel only — avoids touching tab GIF links)
+   ============================================================ */
+#MainPanel a,
+#MainCommit a,
+#MainPanel .body_small a,
+#AgentTimeSpan a,
+#CallLogLinkSpan a,
+#PauseCodeLinkSpan a,
+#AgentViewLink a,
+#ScriptRefresH a,
+#MainCommit a {
+  color: var(--blue) !important;
+  text-decoration: none;
+}
+#MainPanel a:hover,
+#AgentTimeSpan a:hover,
+#CallLogLinkSpan a:hover,
+#PauseCodeLinkSpan a:hover,
+#AgentViewLink a:hover,
+#ScriptRefresH a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   TRANSFER PANEL
+   ============================================================ */
+#TransferMain {
+  background-color: var(--bg-alt) !important;
+}
+
+/* ============================================================
+   SIDEBAR & WEBPHONE AREA
+   ============================================================ */
+#AgentViewSpan {
+  background-color: var(--bg) !important;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#MaiNfooterspan,
+#MaiNfooter {
+  background-color: var(--bg-alt) !important;
+}
+#MaiNfooterspan font,
+#MaiNfooter font {
+  font-family: var(--font) !important;
+  font-size: 10px;
+  color: var(--text-muted) !important;
+}
+
+/* ============================================================
+   OVERLAY / MODAL BOXES
+   ============================================================ */
+/* HotKey boxes */
+#HotKeyActionBox table,
+#HotKeyEntriesBox table {
+  background-color: var(--amber-bg) !important;
+}
+
+/* Extended alt phone */
+#EAcommentsBox table,
+#EAcommentsMinBox table {
+  background-color: #FFFFF0 !important;
+}
+
+/* ============================================================
+   CHAT SCROLL CONTAINERS
+   ============================================================ */
 div.scrolling,
 div.scrolling_transcript,
 div.scrolling_chat_display {
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius);
-  background-color: #FFFFFF !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  background: var(--surface) !important;
 }
 
-/* --- Tab bar: style ONLY the background of the row, not inner elements ---- */
-#Tabs > table {
-  background-color: var(--color-primary) !important;
-}
-
-/* External tool anchors we added (WhatsApp / CRM) */
-#Tabs td[style*="25D366"] {
-  background-color: #128C4A !important;
-}
-#Tabs td[style*="0057B7"] {
-  background-color: #0D47A1 !important;
-}
-
-/* --- Scrollbar (webkit) — cosmetic only ------------------------------------ */
-::-webkit-scrollbar        { width: 6px; height: 6px; }
-::-webkit-scrollbar-track  { background: var(--color-bg); }
-::-webkit-scrollbar-thumb  { background: var(--color-border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-text-light); }
+/* ============================================================
+   SCROLLBARS  (Webkit)
+   ============================================================ */
+::-webkit-scrollbar        { width: 6px;  height: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: var(--border-dark); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-light); }
