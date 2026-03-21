@@ -44,6 +44,18 @@ jobs:
           target: /srv/www/htdocs
           rm: false
 
+      - name: Fix permissions
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: vici.softvici.cloud
+          username: root
+          password: ${{ secrets.VPS_STAGING_PASSWORD }}
+          script: |
+            chown -R wwwrun:www /srv/www/htdocs
+            chmod -R 755 /srv/www/htdocs
+            find /srv/www/htdocs -name "*.txt" -exec chmod 666 {} \;
+            echo "✅ Permisos corregidos"
+
       - name: Verify deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -70,6 +82,18 @@ jobs:
           source: ".,!.git,!.github,!*.sql,!E1ziEw4nqWSKvA7MczOXvBMe924FCbvg"
           target: /srv/www/htdocs
           rm: false
+
+      - name: Fix permissions
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_PROD_HOST }}
+          username: root
+          password: ${{ secrets.VPS_PROD_PASSWORD }}
+          script: |
+            chown -R wwwrun:www /srv/www/htdocs
+            chmod -R 755 /srv/www/htdocs
+            find /srv/www/htdocs -name "*.txt" -exec chmod 666 {} \;
+            echo "✅ Permisos corregidos"
 
       - name: Verify deploy
         uses: appleboy/ssh-action@v1.0.3
