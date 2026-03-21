@@ -1,58 +1,1668 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   VICIDIAL-FIVE 2.0 — Modern Agent Theme
+   ═══════════════════════════════════════════════════════════════════════
+   Overrides for agc/vicidial.php agent screen.
+   Only visual changes — zero functionality impact.
+   ═══════════════════════════════════════════════════════════════════════ */
 
-input.red_btn{
-   font-family: Arial, Sans-Serif;
-   font-size: 10px;
-   color:#FFFFFF;
-   font-weight:bold;
-   background-color:#990000;
-   border:2px solid;
-   border-top-color:#FFCCCC;
-   border-left-color:#FFCCCC;
-   border-right-color:#330000;
-   border-bottom-color:#330000;
+/* ─── 1. DESIGN TOKENS ─────────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --brand-50:  #f0f4ff;
+  --brand-100: #e0e9ff;
+  --brand-200: #c7d6fe;
+  --brand-300: #a4b8fc;
+  --brand-400: #818cf8;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+
+  /* Neutrals (warm slate) */
+  --neutral-0:   #ffffff;
+  --neutral-50:  #f8f9fb;
+  --neutral-100: #f1f3f5;
+  --neutral-150: #e9ecef;
+  --neutral-200: #dee2e6;
+  --neutral-300: #ced4da;
+  --neutral-400: #adb5bd;
+  --neutral-500: #868e96;
+  --neutral-600: #6c757d;
+  --neutral-700: #495057;
+  --neutral-800: #343a40;
+  --neutral-900: #212529;
+
+  /* Semantic */
+  --success-light: #ecfdf5;
+  --success:       #10b981;
+  --success-dark:  #065f46;
+  --danger-light:  #fef2f2;
+  --danger:        #ef4444;
+  --danger-dark:   #991b1b;
+  --warning-light: #fffbeb;
+  --warning:       #f59e0b;
+  --warning-dark:  #92400e;
+  --info-light:    #eff6ff;
+  --info:          #3b82f6;
+  --info-dark:     #1e40af;
+
+  /* Surface & elevation */
+  --surface-0:     #ffffff;
+  --surface-1:     #f8f9fb;
+  --surface-2:     #f1f3f5;
+  --surface-raised: #ffffff;
+
+  /* Shadows */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
+  --shadow-lg:  0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.04);
+  --shadow-xl:  0 20px 25px -5px rgba(0,0,0,.08), 0 8px 10px -6px rgba(0,0,0,.04);
+
+  /* Radii */
+  --radius-sm:  4px;
+  --radius-md:  6px;
+  --radius-lg:  10px;
+  --radius-xl:  14px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
 }
-input.green_btn{
-   font-family: Arial, Sans-Serif;
-   font-size: 10px;
-   color:#FFFFFF;
-   font-weight:bold;
-   background-color:#009900;
-   border:2px solid;
-   border-top-color:#CCFFCC;
-   border-left-color:#CCFFCC;
-   border-right-color:#003300;
-   border-bottom-color:#003300;
+
+
+/* ─── 2. BASE RESET & GLOBAL ──────────────────────────────────────── */
+body {
+  font-family: var(--font-sans) !important;
+  background: var(--surface-1) !important;
+  color: var(--neutral-800) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
 }
-input.blue_btn{
-   font-family: Arial, Sans-Serif;
-   font-size: 10px;
-   color:#FFFFFF;
-   font-weight:bold;
-   background-color:#000099;
-   border:2px solid;
-   border-top-color:#CCCCFF;
-   border-left-color:#CCCCFF;
-   border-right-color:#000033;
-   border-bottom-color:#000033;
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
-input.form_field {
-    font-family: Arial, Sans-Serif;
-    font-size: 10px;
-    margin-bottom: 3px;
-    padding: 2px;
-    border: solid 1px #000066;
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+
+/* ─── 3. TYPOGRAPHY CLASSES ────────────────────────────────────────── */
+/* Override every legacy font class from style.css */
+.body_text,
+font.body_text {
+  font-family: var(--font-sans) !important;
+  font-size: 12.5px !important;
+  color: var(--neutral-800) !important;
+  letter-spacing: -0.01em;
 }
-textarea.form_field {
-    font-family: Arial, Sans-Serif;
-    font-size: 10px;
-    margin-bottom: 3px;
-    padding: 2px;
-    border: solid 1px #000066;
+
+.queue_text,
+font.queue_text {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  color: var(--neutral-600) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0;
 }
+
+.queue_text_red,
+font.queue_text_red {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  color: var(--danger) !important;
+  font-weight: 600 !important;
+}
+
+.body_small,
+font.body_small {
+  font-family: var(--font-sans) !important;
+  font-size: 11.5px !important;
+  color: var(--neutral-700) !important;
+}
+
+.body_small_bold,
+font.body_small_bold {
+  font-family: var(--font-sans) !important;
+  font-size: 11.5px !important;
+  color: var(--neutral-800) !important;
+  font-weight: 600 !important;
+}
+
+.body_tiny,
+font.body_tiny {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  color: var(--neutral-600) !important;
+}
+
+.sd_text,
+font.sd_text {
+  font-family: var(--font-sans) !important;
+  font-size: 15px !important;
+  color: var(--neutral-900) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+}
+
+.sh_text,
+font.sh_text {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  color: var(--neutral-800) !important;
+  font-weight: 600 !important;
+}
+
+.sh_text_white,
+font.sh_text_white {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  color: var(--neutral-0) !important;
+  font-weight: 600 !important;
+}
+
+.sb_text,
+font.sb_text {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  color: var(--neutral-700) !important;
+}
+
+.sk_text,
+font.sk_text {
+  font-family: var(--font-sans) !important;
+  font-size: 11.5px !important;
+  color: var(--neutral-700) !important;
+}
+
+.skb_text,
+font.skb_text {
+  font-family: var(--font-sans) !important;
+  font-size: 12.5px !important;
+  color: var(--neutral-800) !important;
+  font-weight: 600 !important;
+}
+
+.log_text,
+font.log_text {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  color: var(--neutral-700) !important;
+}
+
+.log_text_red,
+font.log_text_red {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--neutral-0) !important;
+  background: var(--danger) !important;
+  padding: 1px 6px !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.log_title,
+font.log_title {
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--neutral-800) !important;
+}
+
+.loading_text,
+font.loading_text {
+  font-family: var(--font-sans) !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: var(--neutral-700) !important;
+  letter-spacing: -0.02em;
+}
+
+.preview_text,
+font.preview_text {
+  font-family: var(--font-sans) !important;
+  font-size: 11.5px !important;
+  color: var(--neutral-700) !important;
+  background: transparent !important;
+}
+
+.preview_text_red,
+font.preview_text_red {
+  font-family: var(--font-sans) !important;
+  font-size: 11.5px !important;
+  color: var(--danger-dark) !important;
+  background: var(--danger-light) !important;
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
+}
+
+.ON_conf {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  color: var(--success-dark) !important;
+  background: var(--success-light) !important;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.OFF_conf {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  color: var(--warning-dark) !important;
+  background: var(--warning-light) !important;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+}
+
+
+/* ─── 4. FORM ELEMENTS ─────────────────────────────────────────────── */
+/* Text inputs */
+input[type="text"].cust_form,
+input[type="password"].cust_form,
+input.cust_form,
+.cust_form input[type="text"],
+.cust_form input[type="password"] {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  padding: 5px 8px !important;
+  border: 1px solid var(--neutral-300) !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--neutral-0) !important;
+  color: var(--neutral-800) !important;
+  outline: none !important;
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out) !important;
+  line-height: 1.4 !important;
+}
+
+input[type="text"].cust_form:focus,
+input[type="password"].cust_form:focus,
+input.cust_form:focus {
+  border-color: var(--brand-400) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+}
+
+input[type="text"].cust_form:read-only,
+input.cust_form[readonly] {
+  background: var(--neutral-100) !important;
+  color: var(--neutral-600) !important;
+  cursor: default;
+}
+
+/* Textareas */
+textarea.cust_form_text,
+textarea.cust_form {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  padding: 6px 8px !important;
+  border: 1px solid var(--neutral-300) !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--neutral-0) !important;
+  color: var(--neutral-800) !important;
+  outline: none !important;
+  resize: vertical !important;
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out) !important;
+  line-height: 1.5 !important;
+}
+
+textarea.cust_form_text:focus,
+textarea.cust_form:focus {
+  border-color: var(--brand-400) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Selects */
+select.cust_form,
+.cust_form select,
+select {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  padding: 4px 24px 4px 8px !important;
+  border: 1px solid var(--neutral-300) !important;
+  border-radius: var(--radius-md) !important;
+  background-color: var(--neutral-0) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23495057' viewBox='0 0 16 16'%3E%3Cpath d='M8 11.5l-5-5h10l-5 5z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 6px center !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  color: var(--neutral-800) !important;
+  outline: none !important;
+  cursor: pointer;
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out) !important;
+}
+
+select.cust_form:focus,
+select:focus {
+  border-color: var(--brand-400) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Checkboxes */
+input[type="checkbox"] {
+  width: 15px !important;
+  height: 15px !important;
+  accent-color: var(--brand-500) !important;
+  border-radius: 3px !important;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Legacy .form_field overrides */
+input.form_field,
+textarea.form_field,
 select.form_field {
-    font-family: Arial, Sans-Serif;
-    font-size: 10px;
-    margin-bottom: 3px;
-    padding: 2px;
-    border: solid 1px #000066;
-} 
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  padding: 5px 8px !important;
+  border: 1px solid var(--neutral-300) !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--neutral-0) !important;
+  color: var(--neutral-800) !important;
+  margin-bottom: 3px;
+  outline: none !important;
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out) !important;
+}
+
+input.form_field:focus,
+textarea.form_field:focus,
+select.form_field:focus {
+  border-color: var(--brand-400) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Colored action buttons */
+input.red_btn {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--neutral-0) !important;
+  background: var(--danger) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  padding: 5px 12px !important;
+  cursor: pointer;
+  transition: background var(--duration-normal) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out) !important;
+  box-shadow: var(--shadow-xs) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+input.red_btn:hover {
+  background: var(--danger-dark) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transform: translateY(-1px);
+}
+
+input.red_btn:active {
+  transform: translateY(0);
+}
+
+input.green_btn {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--neutral-0) !important;
+  background: var(--success) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  padding: 5px 12px !important;
+  cursor: pointer;
+  transition: background var(--duration-normal) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out) !important;
+  box-shadow: var(--shadow-xs) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+input.green_btn:hover {
+  background: var(--success-dark) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transform: translateY(-1px);
+}
+
+input.green_btn:active {
+  transform: translateY(0);
+}
+
+input.blue_btn {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--neutral-0) !important;
+  background: var(--brand-500) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  padding: 5px 12px !important;
+  cursor: pointer;
+  transition: background var(--duration-normal) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out) !important;
+  box-shadow: var(--shadow-xs) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+input.blue_btn:hover {
+  background: var(--brand-700) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transform: translateY(-1px);
+}
+
+input.blue_btn:active {
+  transform: translateY(0);
+}
+
+/* Generic buttons */
+input[type="button"],
+button {
+  font-family: var(--font-sans) !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  border: 1px solid var(--neutral-300) !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--neutral-0) !important;
+  color: var(--neutral-700) !important;
+  padding: 4px 12px !important;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out) !important;
+  box-shadow: var(--shadow-xs);
+}
+
+input[type="button"]:hover,
+button:hover {
+  background: var(--neutral-100) !important;
+  border-color: var(--neutral-400) !important;
+  color: var(--neutral-900) !important;
+}
+
+input[type="button"]:active,
+button:active {
+  background: var(--neutral-200) !important;
+}
+
+
+/* ─── 5. LINKS ─────────────────────────────────────────────────────── */
+a {
+  color: var(--brand-600) !important;
+  text-decoration: none !important;
+  font-weight: 500;
+  transition: color var(--duration-normal) var(--ease-out),
+              opacity var(--duration-normal) var(--ease-out);
+}
+
+a:hover {
+  color: var(--brand-700) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+a:active {
+  opacity: 0.8;
+}
+
+/* Preserve image link styles */
+a img {
+  transition: opacity var(--duration-normal) var(--ease-out),
+              filter var(--duration-normal) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+}
+
+a:hover img {
+  opacity: 0.85;
+  filter: brightness(1.05);
+}
+
+
+/* ─── 6. LOADING SCREEN ────────────────────────────────────────────── */
+#LoadingBox {
+  background: var(--surface-0) !important;
+}
+
+#LoadingBox table {
+  background: var(--surface-0) !important;
+}
+
+
+/* ─── 7. HEADER BAR ────────────────────────────────────────────────── */
+#Header {
+  background: var(--surface-0) !important;
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+#Header table {
+  background: var(--surface-0) !important;
+}
+
+#Header a {
+  font-weight: 600 !important;
+  font-size: 11.5px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#Header a:hover {
+  background: var(--neutral-100);
+  text-decoration: none !important;
+}
+
+
+/* ─── 8. TAB NAVIGATION ────────────────────────────────────────────── */
+#Tabs {
+  background: var(--surface-0) !important;
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+#Tabs table {
+  background: var(--surface-0) !important;
+}
+
+#Tabs td {
+  border-right: 1px solid var(--neutral-150) !important;
+  vertical-align: middle !important;
+}
+
+#Tabs td:last-child {
+  border-right: none !important;
+}
+
+/* Tab images - subtle hover */
+#Tabs a {
+  display: block;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#Tabs a:hover {
+  text-decoration: none !important;
+  opacity: 0.9;
+}
+
+/* WhatsApp tab - modern pill */
+#Tabs td[style*="#25D366"] {
+  background-color: #22c55e !important;
+  border-radius: var(--radius-md) !important;
+  border-right: none !important;
+  padding: 2px !important;
+  margin: 3px 2px !important;
+}
+
+#Tabs td[style*="#25D366"] a {
+  font-family: var(--font-sans) !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-md) !important;
+}
+
+/* CRM tab - modern pill */
+#Tabs td[style*="#0057B7"] {
+  background-color: var(--brand-500) !important;
+  border-radius: var(--radius-md) !important;
+  border-right: none !important;
+  padding: 2px !important;
+  margin: 3px 2px !important;
+}
+
+#Tabs td[style*="#0057B7"] a {
+  font-family: var(--font-sans) !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-md) !important;
+}
+
+/* Session / Status area in tab bar */
+#status {
+  font-family: var(--font-sans) !important;
+  font-weight: 600;
+  color: var(--success) !important;
+  text-transform: uppercase;
+  font-size: 10px !important;
+  letter-spacing: 0.06em;
+}
+
+/* Live call indicator area */
+#Tabs img[name="livecall"] {
+  border-radius: var(--radius-sm);
+}
+
+
+/* ─── 9. MAIN PANEL ────────────────────────────────────────────────── */
+#MainPanel {
+  background: var(--surface-0) !important;
+}
+
+#MainPanel > table,
+#MainTable,
+table#MainTable {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+/* Override inline bgcolor on MainTable */
+#MainPanel table {
+  background-color: var(--surface-0) !important;
+}
+
+/* Left button column (150px) */
+#MainPanel > table > tbody > tr > td:first-child {
+  background: var(--surface-1) !important;
+  border-right: 1px solid var(--neutral-200) !important;
+  padding: 8px 4px !important;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+}
+
+/* Customer info area */
+#MainPanelCustInfo {
+  background: var(--surface-0) !important;
+}
+
+#MainPanelCustInfo table {
+  border-collapse: separate !important;
+  border-spacing: 2px 4px !important;
+}
+
+
+/* ─── 10. IMAGE-BASED ACTION BUTTONS ───────────────────────────────── */
+/* Dial Next Number */
+#DiaLControl {
+  background: var(--success-light) !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 2px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-xs);
+}
+
+#DiaLControl:hover {
+  box-shadow: var(--shadow-sm);
+  background: #d1fae5 !important;
+}
+
+#DiaLControl img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Recording controls */
+#RecorDControl,
+#RecorDMute,
+#StRecorDControl {
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 1px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#RecorDControl:hover {
+  background: var(--neutral-100) !important;
+}
+
+#RecorDControl img,
+#RecorDMute img,
+#StRecorDControl img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Web Form buttons */
+#WebFormSpan,
+#WebFormSpanTwo,
+#WebFormSpanThree {
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 1px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#WebFormSpan:hover,
+#WebFormSpanTwo:hover,
+#WebFormSpanThree:hover {
+  background: var(--neutral-100) !important;
+  box-shadow: var(--shadow-xs);
+}
+
+#WebFormSpan img,
+#WebFormSpanTwo img,
+#WebFormSpanThree img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Park Call */
+#ParkControl {
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 1px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#ParkControl:hover {
+  background: var(--neutral-100) !important;
+}
+
+#ParkControl img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* IVR Park Call */
+#ivrParkControl {
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 1px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#ivrParkControl:hover {
+  background: var(--neutral-100) !important;
+}
+
+#ivrParkControl img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Transfer / Conference */
+#XferControl {
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 1px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#XferControl:hover {
+  background: var(--info-light) !important;
+}
+
+#XferControl img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Quick Transfer / Custom Transfer */
+#QuickXfer,
+#CustomXfer {
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 1px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#QuickXfer:hover,
+#CustomXfer:hover {
+  background: var(--neutral-100) !important;
+}
+
+#QuickXfer img,
+#CustomXfer img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* HANGUP CUSTOMER — critical action, prominent styling */
+#HangupControl {
+  background: var(--danger-light) !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 2px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-xs);
+}
+
+#HangupControl:hover {
+  background: #fecaca !important;
+  box-shadow: var(--shadow-sm);
+}
+
+#HangupControl img {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Send DTMF */
+#SendDTMF {
+  background: transparent !important;
+}
+
+#SendDTMF img {
+  border-radius: var(--radius-sm) !important;
+  vertical-align: middle;
+}
+
+#SendDTMFdiv {
+  margin-top: 4px;
+  padding: 4px 0 !important;
+}
+
+/* Spacer blanks - hide ugly gaps */
+#SpacerSpanA img,
+#SpacerSpanC img,
+#SpacerSpanD img {
+  opacity: 0;
+  height: 8px !important;
+}
+
+
+/* ─── 11. TRANSFER / CONFERENCE PANEL ──────────────────────────────── */
+#TransferMain {
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  overflow: hidden;
+}
+
+#TransferMain > table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+#TransferMain table table {
+  background: transparent !important;
+}
+
+#TransferMaindiv {
+  background: var(--surface-0) !important;
+}
+
+/* Transfer section header image */
+#TransferMain img[alt="Transfer - Conference"] {
+  border-radius: var(--radius-sm);
+}
+
+/* Transfer action buttons */
+#LocalCloser,
+#HangupXferLine,
+#ParkXferLine,
+#HangupBothLines,
+#Leave3WayCall,
+#DialBlindTransfer,
+#DialWithCustomer,
+#ParkCustomerDial,
+#PresetPullDown,
+#ContactPullDown,
+#DialBlindVMail {
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-block;
+  padding: 1px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#LocalCloser:hover,
+#HangupXferLine:hover,
+#ParkXferLine:hover,
+#DialBlindTransfer:hover,
+#DialWithCustomer:hover,
+#ParkCustomerDial:hover,
+#PresetPullDown:hover,
+#ContactPullDown:hover,
+#DialBlindVMail:hover {
+  background: var(--neutral-100) !important;
+}
+
+#HangupBothLines:hover {
+  background: var(--danger-light) !important;
+}
+
+#Leave3WayCall:hover {
+  background: var(--warning-light) !important;
+}
+
+#LocalCloser img,
+#HangupXferLine img,
+#ParkXferLine img,
+#HangupBothLines img,
+#Leave3WayCall img,
+#DialBlindTransfer img,
+#DialWithCustomer img,
+#ParkCustomerDial img,
+#PresetPullDown img,
+#ContactPullDown img,
+#DialBlindVMail img {
+  border-radius: var(--radius-sm) !important;
+}
+
+
+/* ─── 12. HOTKEY PANELS ────────────────────────────────────────────── */
+#HotKeyActionBox table,
+#HotKeyEntriesBox table {
+  background: var(--warning-light) !important;
+  background-color: var(--warning-light) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-md) !important;
+  overflow: hidden;
+}
+
+#HotKeyActionBox table tr[bgcolor],
+#HotKeyEntriesBox table tr[bgcolor] {
+  background: var(--warning-light) !important;
+  background-color: var(--warning-light) !important;
+}
+
+#HotKeyActionBox table tr:first-child td,
+#HotKeyEntriesBox table tr:first-child td {
+  background: #fef3c7 !important;
+  padding: 8px 12px !important;
+}
+
+
+/* ─── 13. MODAL / OVERLAY PANELS ───────────────────────────────────── */
+/* Shared modal card style */
+#DispoSelectBox table,
+#CallBackSelectBox table,
+#CallBacKsLisTBox table,
+#NeWManuaLDiaLBox table,
+#CloserSelectBox table,
+#TerritorySelectBox table,
+#CalLLoGDisplaYBox table,
+#AgentTimeDisplayBox table,
+#PauseCodeSelectBox table,
+#PauseCodeMgrAprBox table,
+#GroupAliasSelectBox table,
+#DiaLInGrouPSelectBox table,
+#SCForceDialBox table,
+#ManualValidateBox table,
+#LeaDInfOBox table,
+#CalLNotesDisplaYBox table,
+#SearcHForMDisplaYBox table,
+#SearcHResultSDisplaYBox table,
+#SearcHContactsDisplaYBox table,
+#SearcHResultSContactsBox table,
+#blind_monitor_alert_span table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  border: 1px solid var(--neutral-200) !important;
+}
+
+#DispoSelectBox table td,
+#CallBackSelectBox table td,
+#CallBacKsLisTBox table td,
+#NeWManuaLDiaLBox table td,
+#CloserSelectBox table td,
+#TerritorySelectBox table td,
+#CalLLoGDisplaYBox table td,
+#AgentTimeDisplayBox table td,
+#PauseCodeSelectBox table td,
+#PauseCodeMgrAprBox table td,
+#GroupAliasSelectBox table td,
+#DiaLInGrouPSelectBox table td,
+#SCForceDialBox table td,
+#ManualValidateBox table td,
+#LeaDInfOBox table td,
+#CalLNotesDisplaYBox table td,
+#SearcHForMDisplaYBox table td,
+#SearcHResultSDisplaYBox table td,
+#SearcHContactsDisplaYBox table td,
+#SearcHResultSContactsBox table td,
+#blind_monitor_alert_span table td {
+  padding: 12px 16px !important;
+}
+
+/* Contact search and search results with distinct accent */
+#SearcHContactsDisplaYBox table,
+#SearcHResultSContactsBox table {
+  border-left: 3px solid var(--info) !important;
+}
+
+/* Disposition-related elements */
+#DispoSelectBox a,
+#CallBackSelectBox a,
+#CloserSelectBox a,
+#TerritorySelectBox a {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#DispoSelectBox a:hover,
+#CallBackSelectBox a:hover,
+#CloserSelectBox a:hover,
+#TerritorySelectBox a:hover {
+  background: var(--brand-50);
+  text-decoration: none !important;
+}
+
+/* Dispo hide panels */
+#DispoButtonHideA table,
+#DispoButtonHideB table,
+#DispoButtonHideC table {
+  background: var(--surface-1) !important;
+  background-color: var(--surface-1) !important;
+}
+
+
+/* ─── 14. ALERT & STATUS BOXES ─────────────────────────────────────── */
+/* None in session */
+#NoneInSessionBox table {
+  background: var(--info-light) !important;
+  background-color: var(--info-light) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid #bfdbfe !important;
+}
+
+/* Customer gone */
+#CustomerGoneBox table {
+  background: var(--warning-light) !important;
+  background-color: var(--warning-light) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid #fde68a !important;
+}
+
+/* Wrapup */
+#WrapupBox table {
+  background: var(--success-light) !important;
+  background-color: var(--success-light) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid #a7f3d0 !important;
+}
+
+/* Timer messages */
+#TimerSpan table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  border: 1px solid var(--neutral-200) !important;
+}
+
+/* Agent disabled */
+#AgenTDisablEBoX table {
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
+/* System disabled */
+#SysteMDisablEBoX table {
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
+/* Logout */
+#LogouTBox table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+/* Welcome */
+#WelcomeBoxA table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+
+/* ─── 15. ALERT BOX (DIALOG) ──────────────────────────────────────── */
+#AlertBox > table {
+  background: var(--neutral-700) !important;
+  background-color: var(--neutral-700) !important;
+  border: none !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-xl) !important;
+  overflow: hidden;
+}
+
+#AlertBox > table > tbody > tr:first-child > td {
+  background: var(--neutral-800) !important;
+  background-color: var(--neutral-800) !important;
+  padding: 10px 14px !important;
+}
+
+#AlertBox > table > tbody > tr:first-child > td font {
+  color: var(--neutral-0) !important;
+}
+
+#AlertBox table table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+#AlertBox button {
+  background: var(--brand-500) !important;
+  color: var(--neutral-0) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  padding: 6px 24px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: background var(--duration-normal) var(--ease-out);
+}
+
+#AlertBox button:hover {
+  background: var(--brand-700) !important;
+}
+
+
+/* ─── 16. FOOTER ───────────────────────────────────────────────────── */
+#MaiNfooterspan {
+  background: var(--surface-0) !important;
+}
+
+#MaiNfooter,
+table#MaiNfooter {
+  background: var(--surface-1) !important;
+  background-color: var(--surface-1) !important;
+  border-top: 1px solid var(--neutral-200) !important;
+}
+
+#MaiNfooter font[face] {
+  font-family: var(--font-sans) !important;
+  font-size: 10px !important;
+  color: var(--neutral-500) !important;
+}
+
+
+/* ─── 17. SIDEBAR — AGENTS VIEW ────────────────────────────────────── */
+#AgentViewSpan {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-left: 1px solid var(--neutral-200) !important;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0 !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* Calls in queue */
+#callsinqueuedisplay {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-top: 1px solid var(--neutral-200) !important;
+  border-radius: 0 !important;
+}
+
+
+/* ─── 18. SCRIPT / FORM / EMAIL / CHAT PANELS ─────────────────────── */
+#ScriptPanel table,
+#Script2Panel table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+#FormPanel table,
+#EmailPanel table,
+#CustomerChatPanel table,
+#InternalChatPanel table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+div.scroll_script,
+div.noscroll_script {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-md);
+  padding: 8px !important;
+}
+
+div.scroll_form,
+div.noscroll_form {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-md);
+}
+
+/* Iframes inside panels */
+#FormPanel iframe,
+#EmailPanel iframe,
+#CustomerChatPanel iframe,
+#InternalChatPanel iframe {
+  border: none !important;
+  border-radius: var(--radius-md);
+}
+
+
+/* ─── 19. COMMENTS & CALLBACK INFO BOXES ──────────────────────────── */
+/* View Comments */
+#ViewCommentsBox TABLE {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--neutral-200) !important;
+}
+
+#ViewCommentsBox TR[bgcolor] {
+  background: var(--neutral-100) !important;
+  background-color: var(--neutral-100) !important;
+}
+
+#ViewCommentsBox PRE {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* CB Comments */
+#CBcommentsBox table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-md) !important;
+  border: 1px solid var(--neutral-200) !important;
+}
+
+#CBcommentsBox table tr[bgcolor] {
+  background: var(--neutral-100) !important;
+  background-color: var(--neutral-100) !important;
+}
+
+/* Extended Alt Phone Info */
+#EAcommentsBox table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-md) !important;
+  border: 1px solid var(--neutral-200) !important;
+}
+
+#EAcommentsBox table tr[bgcolor] {
+  background: var(--neutral-100) !important;
+  background-color: var(--neutral-100) !important;
+}
+
+#EAcommentsMinBox table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+#EAcommentsMinBox table tr[bgcolor] {
+  background: var(--neutral-100) !important;
+  background-color: var(--neutral-100) !important;
+}
+
+
+/* ─── 20. PRESETS & VM MESSAGE SELECTORS ───────────────────────────── */
+#PresetsSelectBox table,
+#VMMessageSelectBox table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--neutral-200) !important;
+}
+
+
+/* ─── 21. SCROLL CONTAINERS ────────────────────────────────────────── */
+div.scroll_calllog,
+div.scroll_callback,
+div.scroll_callback_auto,
+div.scroll_list {
+  font-family: var(--font-sans) !important;
+  border: 1px solid var(--neutral-200) !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--surface-0) !important;
+  padding: 4px !important;
+}
+
+
+/* ─── 22. CUSTOM SCROLLBAR ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--neutral-100);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-400);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neutral-300) var(--neutral-100);
+}
+
+
+/* ─── 23. BLINK ANIMATION (refined) ───────────────────────────────── */
+.blink {
+  animation: modern-blink 1.2s ease-in-out infinite !important;
+  -webkit-animation: modern-blink 1.2s ease-in-out infinite !important;
+}
+
+@keyframes modern-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@-webkit-keyframes modern-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+
+/* ─── 24. MISC UI ELEMENTS ─────────────────────────────────────────── */
+/* Banner panel */
+#BannerPanel {
+  background: transparent !important;
+}
+
+/* Agent time & status */
+#AgentTimeSpan a,
+#CallbacksButtons a,
+#PauseCodeButtons a,
+#callsinqueuelink a {
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Manual dial buttons area */
+#DiaLlOgButtonspan a {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-md);
+  font-weight: 600 !important;
+  font-size: 11.5px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#DiaLlOgButtonspan a:hover {
+  background: var(--brand-50);
+  text-decoration: none !important;
+}
+
+/* Agent mute span */
+#AgentMuteSpan a {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-md);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#AgentMuteSpan a:hover {
+  background: var(--neutral-100);
+  text-decoration: none !important;
+}
+
+/* Commit link */
+#MainCommit a {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--success-dark) !important;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#MainCommit a:hover {
+  background: var(--success-light);
+  text-decoration: none !important;
+}
+
+/* Seconds display */
+#SecondSspan {
+  font-variant-numeric: tabular-nums;
+}
+
+#SecondSDISP {
+  font-family: var(--font-mono) !important;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: var(--neutral-800);
+}
+
+/* Hotkeys button */
+#hotkeysdisplay img {
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+#hotkeysdisplay a:hover img {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Volume controls */
+#VolumeUpSpan img,
+#VolumeDownSpan img {
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+#VolumeUpSpan:hover img,
+#VolumeDownSpan:hover img {
+  opacity: 0.7;
+}
+
+/* Agent status area */
+#AgentStatusSpan {
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  background: var(--surface-0);
+}
+
+
+/* ─── 25. FSCREENWrapupBox ─────────────────────────────────────────── */
+#FSCREENWrapupBox table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+
+/* ─── 26. HOLIDAY DISPLAY ──────────────────────────────────────────── */
+#HolidayDisplayDiv {
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
+
+/* ─── 27. WEBPHONE PANEL ──────────────────────────────────────────── */
+#webphoneSpan {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+  border-left: 1px solid var(--neutral-200) !important;
+}
+
+
+/* ─── 28. ADMIN MENU STYLE ─────────────────────────────────────────── */
+.adminmenu_style_selected {
+  background-color: var(--surface-0) !important;
+  border-radius: var(--radius-sm);
+}
+
+.adminmenu_style_selected:hover {
+  background-color: var(--neutral-100) !important;
+}
+
+
+/* ─── 29. POST PHONE TIME DIFF (warning) ──────────────────────────── */
+#post_phone_time_diff_span {
+  font-family: var(--font-sans) !important;
+}
+
+#post_phone_time_diff_span font[color="red"],
+#post_phone_time_diff_span_contents {
+  color: var(--danger) !important;
+  font-weight: 600;
+}
+
+/* Blind monitor notice */
+#blind_monitor_notice_span font[color="red"],
+#blind_monitor_notice_span_contents {
+  color: var(--danger) !important;
+}
+
+
+/* ─── 30. INLINE BGCOLOR OVERRIDES ─────────────────────────────────── */
+/* Override common inline table bgcolors that PHP generates */
+/* Green modals (#CCFFCC) — already handled per-panel above */
+
+/* Script top BG */
+#ScriptTopBGspan table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+/* Invalid opener */
+#InvalidOpenerSpan table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+/* Deactivated old session */
+#DeactivateDOlDSessioNSpan table {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+/* Agent xfer view (full screen agent transfer) */
+#AgentXferViewSpan {
+  background: var(--surface-0) !important;
+  background-color: var(--surface-0) !important;
+}
+
+
+/* ─── 31. GLOBAL TABLE CLEANUP ─────────────────────────────────────── */
+/* Remove harsh borders on all inner tables */
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+/* Remove default font tags styling where possible */
+font[face="Arial,Helvetica"],
+font[face="arial,helvetica"],
+font[face="Arial, Helvetica, sans-serif"] {
+  font-family: var(--font-sans) !important;
+}
+
+
+/* ─── 32. SELECTION HIGHLIGHT ──────────────────────────────────────── */
+::selection {
+  background: var(--brand-200);
+  color: var(--neutral-900);
+}
+
+::-moz-selection {
+  background: var(--brand-200);
+  color: var(--neutral-900);
+}
+
+
+/* ─── 33. FOCUS VISIBLE ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--brand-400);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--brand-400);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+
+/* ─── 34. PRINT STYLES ────────────────────────────────────────────── */
+@media print {
+  body {
+    background: #fff !important;
+  }
+  #MaiNfooterspan,
+  #Tabs,
+  #Header {
+    display: none !important;
+  }
+}
+
+
+/* ─── 35. REDUCED MOTION ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ─── 36. RESPONSIVE IMPROVEMENTS ──────────────────────────────────── */
+/* Improve readability at smaller viewport widths */
+@media screen and (max-width: 1024px) {
+  .body_text, font.body_text { font-size: 12px !important; }
+  .sh_text, font.sh_text { font-size: 12px !important; }
+  .sd_text, font.sd_text { font-size: 14px !important; }
+
+  input[type="text"].cust_form,
+  input.cust_form,
+  textarea.cust_form_text,
+  textarea.cust_form,
+  select.cust_form,
+  select {
+    font-size: 12px !important;
+  }
+
+  #TransferMain > table {
+    border-radius: var(--radius-md) !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .body_text, font.body_text { font-size: 11.5px !important; }
+  .sd_text, font.sd_text { font-size: 13px !important; }
+  .sh_text, font.sh_text { font-size: 11.5px !important; }
+
+  /* Make modals more readable on small screens */
+  #DispoSelectBox table td,
+  #CallBackSelectBox table td,
+  #PauseCodeSelectBox table td {
+    padding: 8px 10px !important;
+  }
+}
+
+/* High-DPI screens — crisper text */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+}
