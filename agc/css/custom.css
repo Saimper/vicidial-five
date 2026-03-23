@@ -70,36 +70,6 @@
   --btn-danger-h:#991B1B;
 
   /* Button geometry — overridden per breakpoint */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   --btn-h:   28px;
   --btn-w:   136px;
   --btn-fs:  11px;
@@ -178,7 +148,6 @@ body {
   font-family: var(--font) !important;
   font-weight: 600;
 }
-
 
 /* ══════════════════════════════════════════════════════════════════════════════
    SECTION 4 — TABS ROW
@@ -318,8 +287,6 @@ body {
   margin:          0 auto 5px !important;
   box-sizing:      border-box !important;
   text-align:      center !important;
-
-
 }
 
 #NexTCalLPausE font,
@@ -339,7 +306,6 @@ body {
   font-family:     var(--font) !important;
   font-size:       10px !important;
   font-weight:     700 !important;
-
   text-transform:  uppercase !important;
   letter-spacing:  .5px !important;
   text-decoration: none !important;
@@ -348,15 +314,11 @@ body {
   text-decoration: underline !important;
 }
 
-
 /* ══════════════════════════════════════════════════════════════════════════════
    SECTION 8 — LEAD PREVIEW ROW
    ══════════════════════════════════════════════════════════════════════════════ */
 #DiaLLeaDPrevieW,
 #DiaLDiaLAltPhonE {
-
-
-
   padding:     2px 4px !important;
   margin:      1px auto !important;
   width:       var(--btn-w) !important;
@@ -372,7 +334,6 @@ body {
   font-family: var(--font) !important;
   font-size:   10px !important;
   font-weight: 500 !important;
-
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -431,21 +392,10 @@ body {
   padding:      2px 8px !important;
   margin:       2px auto !important;
   display:      inline-block !important;
-
-
-
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
    SECTION 10 — SIDEBAR BUTTONS (GIF → CSS flat)
-
-
-
-
-
-
-
-
    Technique:
      1. Span gets display:flex + dimensions (visual button container)
      2. All <img> hidden with opacity:0 + 0×0 (preserved for JS)
@@ -457,7 +407,18 @@ body {
 
 /* ── Shared container ── */
 #DiaLControl,
-@@ -355,20 +422,38 @@ body {
+#HangupControl,
+#RecorDControl,
+#ParkControl,
+#ivrParkControl,
+#XferControl,
+#QuickXfer,
+#CustomXfer,
+#WebFormSpan,
+#WebFormSpanTwo,
+#WebFormSpanThree {
+  display:         flex !important;
+  align-items:     center !important;
   justify-content: center !important;
   width:           var(--btn-w) !important;
   height:          var(--btn-h) !important;
@@ -493,11 +454,12 @@ body {
 
 /* ── Hover state ── */
 #DiaLControl:hover,
-
 #RecorDControl:hover,
 #ParkControl:hover,
 #ivrParkControl:hover,
-@@ -378,11 +463,13 @@ body {
+#XferControl:hover,
+#QuickXfer:hover,
+#CustomXfer:hover,
 #WebFormSpan:hover,
 #WebFormSpanTwo:hover,
 #WebFormSpanThree:hover {
@@ -511,7 +473,14 @@ body {
 #DiaLControl:active,
 #HangupControl:active,
 #RecorDControl:active,
-@@ -397,7 +484,7 @@ body {
+#ParkControl:active,
+#ivrParkControl:active,
+#XferControl:active,
+#QuickXfer:active,
+#CustomXfer:active,
+#WebFormSpan:active,
+#WebFormSpanTwo:active,
+#WebFormSpanThree:active {
   transform: scale(.97) !important;
 }
 
@@ -519,7 +488,19 @@ body {
 #DiaLControl img,
 #HangupControl img,
 #RecorDControl img,
-@@ -417,7 +504,7 @@ body {
+#ParkControl img,
+#ivrParkControl img,
+#XferControl img,
+#QuickXfer img,
+#CustomXfer img,
+#WebFormSpan img,
+#WebFormSpanTwo img,
+#WebFormSpanThree img {
+  opacity:        0 !important;
+  width:          0 !important;
+  height:         0 !important;
+  display:        block !important;
+  pointer-events: none !important;
   position:       absolute !important;
 }
 
@@ -527,7 +508,19 @@ body {
 #DiaLControl > a,
 #HangupControl > a,
 #RecorDControl > a,
-@@ -437,7 +524,7 @@ body {
+#ParkControl > a,
+#ivrParkControl > a,
+#XferControl > a,
+#QuickXfer > a,
+#CustomXfer > a,
+#WebFormSpan > a,
+#WebFormSpanTwo > a,
+#WebFormSpanThree > a {
+  position:        absolute !important;
+  inset:           0 !important;
+  z-index:         2 !important;
+  background:      transparent !important;
+  text-decoration: none !important;
   display:         block !important;
 }
 
@@ -535,7 +528,14 @@ body {
 #DiaLControl::after,
 #HangupControl::after,
 #RecorDControl::after,
-@@ -452,85 +539,37 @@ body {
+#ParkControl::after,
+#ivrParkControl::after,
+#XferControl::after,
+#QuickXfer::after,
+#CustomXfer::after,
+#WebFormSpan::after,
+#WebFormSpanTwo::after,
+#WebFormSpanThree::after {
   font-family:    var(--font) !important;
   font-size:      var(--btn-fs) !important;
   font-weight:    600 !important;
@@ -558,54 +558,6 @@ body {
 #CustomXfer::after      { content: "Custom Transfer"; }
 #WebFormSpan::after     { content: "Web Form"; }
 #WebFormSpanTwo::after  { content: "Web Form 2"; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #WebFormSpanThree::after { content: "Web Form 3"; }
 
 /* ── Stereo Record (no <a> overlay, img only) ── */
@@ -621,7 +573,9 @@ body {
   position:        relative !important;
   margin:          0 auto 4px !important;
   cursor:          pointer !important;
-@@ -540,7 +579,7 @@ body {
+}
+#StRecorDControl::after {
+  content:        "Stereo Rec";
   font-family:    var(--font) !important;
   font-size:      10px !important;
   font-weight:    600 !important;
@@ -629,7 +583,10 @@ body {
   text-transform: uppercase !important;
   letter-spacing: .3px !important;
 }
-@@ -551,43 +590,50 @@ body {
+#StRecorDControl img {
+  opacity:  0 !important;
+  width:    0 !important;
+  height:   0 !important;
   display:  block !important;
   position: absolute !important;
 }
@@ -680,7 +637,13 @@ body {
 #SendDTMF > a > img {
   opacity:  0 !important;
   width:    0 !important;
-@@ -601,157 +647,174 @@ body {
+  height:   0 !important;
+  display:  block !important;
+  position: absolute !important;
+}
+#SendDTMF > a::after {
+  content:   "DTMF";
+  font-size: 10px !important;
 }
 
 #conf_dtmf {
@@ -709,9 +672,6 @@ body {
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* Text inputs */
-
-
-
 input.cust_form {
   font-family:    var(--font) !important;
   font-size:      var(--in-fs) !important;
@@ -826,7 +786,6 @@ textarea.form_field {
   height:  auto !important;
   padding: 6px 8px !important;
 }
-
 input.form_field:focus,
 textarea.form_field:focus,
 select.form_field:focus {
@@ -850,193 +809,6 @@ textarea.chat_box:focus {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   SECTION 12B — FORM LAYOUT & ALIGNMENT
-   Improves table-based form layout across all form containers:
-     #MainPanelCustInfo  — customer info form (6-col nested table)
-     #NeWManuaLDiaLBox   — manual dial form
-     #SearcHForMDisplaYBox — lead search form
-     #SearcHContactsDisplaYBox — contacts search form
-   Goals: consistent row spacing, label/input alignment, modern inputs.
-   ══════════════════════════════════════════════════════════════════════════════ */
-
-/* ── Row spacing via border-spacing on inner form tables ── */
-#MainPanelCustInfo table table,
-#NeWManuaLDiaLBox table table,
-#SearcHForMDisplaYBox table,
-#SearcHContactsDisplaYBox table {
-  border-collapse: separate !important;
-  border-spacing:  0 2px !important;
-}
-
-/* ── Label cells (right-aligned) — consistent padding, no wrapping ── */
-#MainPanelCustInfo td[align="right"],
-#NeWManuaLDiaLBox td[align="right"],
-#SearcHForMDisplaYBox td[align="right"],
-#SearcHContactsDisplaYBox td[align="right"] {
-  padding:        3px 8px 3px 4px !important;
-  white-space:    nowrap !important;
-  vertical-align: middle !important;
-}
-
-#MainPanelCustInfo td[align="right"] font,
-#NeWManuaLDiaLBox td[align="right"] font,
-#SearcHForMDisplaYBox td[align="right"] font,
-#SearcHContactsDisplaYBox td[align="right"] font {
-  font-family: var(--font) !important;
-  font-size:   var(--in-fs) !important;
-  font-weight: 500 !important;
-  color:       var(--tx-2) !important;
-}
-
-/* ── Input cells (left-aligned) ── */
-#MainPanelCustInfo td[align="left"],
-#NeWManuaLDiaLBox td[align="left"],
-#SearcHForMDisplaYBox td[align="left"],
-#SearcHContactsDisplaYBox td[align="left"] {
-  padding:        3px 4px 3px 0 !important;
-  vertical-align: middle !important;
-}
-
-/* ── Search / Contacts form inputs (no .cust_form class on these) ── */
-#SearcHForMDisplaYBox input[type="text"],
-#SearcHContactsDisplaYBox input[type="text"] {
-  font-family:    var(--font) !important;
-  font-size:      var(--in-fs) !important;
-  height:         var(--in-h) !important;
-  padding:        0 var(--in-px) !important;
-  border:         1px solid var(--bd) !important;
-  border-radius:  var(--in-r) !important;
-  background:     var(--surface) !important;
-  color:          var(--tx-1) !important;
-  vertical-align: middle !important;
-  transition:     border-color .15s, box-shadow .15s !important;
-  outline:        none !important;
-  box-sizing:     border-box !important;
-}
-#SearcHForMDisplaYBox input[type="text"]:focus,
-#SearcHContactsDisplaYBox input[type="text"]:focus {
-  border-color: var(--bd-focus) !important;
-  box-shadow:   0 0 0 3px var(--ring) !important;
-}
-
-/* ── Checkboxes inside search form ── */
-#SearcHForMDisplaYBox input[type="checkbox"] {
-  accent-color:   var(--bd-focus) !important;
-  vertical-align: middle !important;
-  margin-right:   3px !important;
-}
-
-/* ── Max-width safety: prevent input overflow from 550px table ── */
-#MainPanelCustInfo input.cust_form,
-#MainPanelCustInfo select.cust_form {
-  max-width: 100% !important;
-}
-
-/* ── Wide fields: full available width ── */
-#address1, #address2, #address3 {
-  width:     100% !important;
-  max-width: 480px !important;
-}
-#comments, #call_notes, #other_tab_comments {
-  width:     100% !important;
-  max-width: 520px !important;
-}
-
-/* ── Modal form container backgrounds (replace legacy green) ── */
-#NeWManuaLDiaLBox > table,
-#SearcHForMDisplaYBox > table,
-#SearcHContactsDisplaYBox > table,
-#SearcHResultSDisplaYBox > table,
-#CalLNotesDisplaYBox > table {
-  background: var(--surface) !important;
-}
-#NeWManuaLDiaLBox > table > tbody > tr > td,
-#SearcHForMDisplaYBox > table > tbody > tr > td,
-#SearcHContactsDisplaYBox > table > tbody > tr > td,
-#SearcHResultSDisplaYBox > table > tbody > tr > td,
-#CalLNotesDisplaYBox > table > tbody > tr > td {
-  background: var(--surface) !important;
-}
-
-/* ── Form titles inside modal dialogs ── */
-#NeWManuaLDiaLBox .sd_text,
-#SearcHForMDisplaYBox .sd_text,
-#SearcHContactsDisplaYBox .sd_text,
-#SearcHResultSDisplaYBox .sd_text,
-#CalLNotesDisplaYBox .sd_text {
-  color:       var(--tx-1) !important;
-  font-family: var(--font) !important;
-}
-#NeWManuaLDiaLBox .sh_text,
-#SearcHForMDisplaYBox .sh_text,
-#SearcHContactsDisplaYBox .sh_text {
-  color:       var(--tx-2) !important;
-  font-family: var(--font) !important;
-  font-weight: 500 !important;
-}
-
-/* ── Action links styled as buttons (search/manual dial forms use <a>) ── */
-#NeWManuaLDiaLBox > table a[onclick],
-#SearcHForMDisplaYBox td[align="center"] a[onclick],
-#SearcHContactsDisplaYBox td[align="center"] a[onclick] {
-  display:          inline-flex !important;
-  align-items:      center !important;
-  justify-content:  center !important;
-  min-width:        100px !important;
-  height:           30px !important;
-  padding:          0 16px !important;
-  border-radius:    var(--btn-r) !important;
-  background:       var(--btn-primary) !important;
-  color:            #FFFFFF !important;
-  font-family:      var(--font) !important;
-  font-size:        11px !important;
-  font-weight:      600 !important;
-  letter-spacing:   .3px !important;
-  text-transform:   uppercase !important;
-  text-decoration:  none !important;
-  cursor:           pointer !important;
-  transition:       filter .14s, transform .08s !important;
-  margin:           4px 6px !important;
-}
-#NeWManuaLDiaLBox > table a[onclick]:hover,
-#SearcHForMDisplaYBox td[align="center"] a[onclick]:hover,
-#SearcHContactsDisplaYBox td[align="center"] a[onclick]:hover {
-  filter: brightness(.88) !important;
-}
-#NeWManuaLDiaLBox > table a[onclick]:active,
-#SearcHForMDisplaYBox td[align="center"] a[onclick]:active,
-#SearcHContactsDisplaYBox td[align="center"] a[onclick]:active {
-  transform: scale(.97) !important;
-}
-
-/* ── Search results panel ── */
-#SearcHResultSDisplaYBox .sh_text a {
-  color:           var(--blue) !important;
-  font-family:     var(--font) !important;
-  text-decoration: none !important;
-}
-#SearcHResultSDisplaYBox .sh_text a:hover {
-  text-decoration: underline !important;
-}
-#SearcHResultSDisplaYBox .scroll_calllog,
-#CalLNotesDisplaYBox .scroll_calllog {
-  border:        1px solid var(--bd) !important;
-  border-radius: var(--in-r) !important;
-  background:    var(--surface) !important;
-  font-family:   var(--font) !important;
-  font-size:     11px !important;
-  color:         var(--tx-1) !important;
-  padding:       6px !important;
-}
-
-/* ── Customer info section header row (colspan cells) — enhance ── */
-#MainPanelCustInfo tr td[colspan] font.body_text {
-  font-weight:    600 !important;
-  color:          var(--tx-1) !important;
-  letter-spacing: .3px !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════════════════
    SECTION 13 — CONTENT AREA (center column)
    ══════════════════════════════════════════════════════════════════════════════ */
 #MainTable > tbody > tr > td:nth-child(2) {
@@ -1046,7 +818,14 @@ textarea.chat_box:focus {
 }
 
 #MainPanelCustInfo {
-@@ -766,63 +829,68 @@ textarea.chat_box:focus {
+  font-family: var(--font) !important;
+}
+#MainPanelCustInfo table {
+  border-collapse: collapse !important;
+  width:           100% !important;
+}
+#MainPanelCustInfo td {
+  padding:        3px 5px !important;
   vertical-align: middle !important;
   font-family:    var(--font) !important;
   font-size:      11px !important;
@@ -1115,7 +894,12 @@ textarea.chat_box:focus {
 #SIPphonePanel td,
 #SoftPhonePanel td {
   font-family: var(--font) !important;
-@@ -835,62 +903,148 @@ textarea.chat_box:focus {
+  font-size:   11px !important;
+}
+#SIPstatusSpan,
+#SIPregSpan {
+  font-family: var(--font) !important;
+  font-size:   10px !important;
   font-weight: 600 !important;
 }
 
@@ -1128,37 +912,17 @@ textarea.chat_box:focus {
   color:       var(--tx-1) !important;
 }
 .body_small {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   font-family: var(--font) !important;
   font-size:   11px !important;
   color:       var(--tx-1) !important;
 }
 .body_small_bold {
-
-
   font-family: var(--font) !important;
   font-size:   11px !important;
   color:       var(--tx-1) !important;
   font-weight: 600 !important;
 }
 .body_tiny {
-
-
   font-family: var(--font) !important;
   font-size:   10px !important;
   color:       var(--tx-2) !important;
@@ -1281,15 +1045,15 @@ textarea.chat_box:focus {
 #MainPanel a,
 #AgentTimeSpan a,
 #CallLogLinkSpan a,
-
 #ScriptRefresH a,
 #MainCommit a {
   color:           var(--blue) !important;
-@@ -900,177 +1054,188 @@ textarea.chat_box:focus {
+  text-decoration: none !important;
+  font-family:     var(--font) !important;
+}
 #MainPanel a:hover,
 #AgentTimeSpan a:hover,
 #CallLogLinkSpan a:hover,
-
 #ScriptRefresH a:hover,
 #MainCommit a:hover {
   text-decoration: underline !important;
@@ -1343,49 +1107,6 @@ textarea.chat_box:focus {
 /* ══════════════════════════════════════════════════════════════════════════════
    SECTION 18 — PAUSE CODE SELECTOR
    ══════════════════════════════════════════════════════════════════════════════ */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #PauseCodeList,
 select#pause_code {
   font-family:   var(--font) !important;
@@ -1518,7 +1239,8 @@ input.blue_btn {
 #MainCommit input[type="button"],
 #MainCommit input[type="submit"] {
   font-family:   var(--font) !important;
-@@ -1079,82 +1244,102 @@ input.blue_btn {
+  font-size:     12px !important;
+  font-weight:   600 !important;
   height:        28px !important;
   padding:       0 16px !important;
   border:        none !important;
@@ -1596,9 +1318,6 @@ input.blue_btn {
 #BlindXferSpan > a {
   background: var(--btn-primary) !important;
 }
-
-
-
 #ConfCancelSpan > a,
 #ConferencedHangup > a {
   background: var(--btn-danger) !important;
@@ -1624,7 +1343,12 @@ input.blue_btn {
   box-shadow:       var(--sh-md) !important;
   overflow:         hidden !important;
 }
-@@ -1167,36 +1352,41 @@ input.blue_btn {
+#WrapupBox table,
+#FSCREENWrapupBox table {
+  background-color: var(--surface) !important;
+  border-collapse:  collapse !important;
+}
+#WrapupBox td,
 #FSCREENWrapupBox td {
   font-family: var(--font) !important;
   font-size:   12px !important;
@@ -1666,7 +1390,8 @@ select#disposition:focus {
 #WrapupBox input[type="button"],
 #FSCREENWrapupBox input[type="button"] {
   font-family:   var(--font) !important;
-@@ -1205,142 +1395,239 @@ select#disposition:focus {
+  font-size:     12px !important;
+  font-weight:   600 !important;
   height:        30px !important;
   padding:       0 18px !important;
   border:        none !important;
@@ -1834,14 +1559,6 @@ div.scrolling_chat_display {
 #MaiNfooter a:hover {
   color:           var(--tx-2) !important;
   text-decoration: underline !important;
-
-
-
-
-
-
-
-
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -1914,7 +1631,8 @@ input[type="radio"] {
 :focus-visible {
   outline:        2px solid var(--bd-focus) !important;
   outline-offset: 2px !important;
-@@ -1349,55 +1636,45 @@ input[type="radio"] {
+}
+:focus:not(:focus-visible) { outline: none !important; }
 
 ::selection {
   background: var(--blue-bg);
@@ -1927,14 +1645,6 @@ input[type="radio"] {
    Layout stays absolute-positioned (JS-controlled). We only scale content.
    ══════════════════════════════════════════════════════════════════════════════ */
 @media screen and (max-width: 1280px) {
-
-
-
-
-
-
-
-
   :root {
     --btn-h:   24px;
     --btn-w:   128px;
@@ -1949,18 +1659,6 @@ input[type="radio"] {
   body { font-size: 11px !important; }
 
   /* Header slightly smaller */
-
-
-
-
-
-
-
-
-
-
-
-
   #Header font,
   #Header .body_text,
   #Header .body_tiny { font-size: 10px !important; }
@@ -1980,11 +1678,14 @@ input[type="radio"] {
   #DiaLControl,
   #HangupControl,
   #RecorDControl,
-@@ -1409,56 +1686,119 @@ input[type="radio"] {
+  #ParkControl,
+  #ivrParkControl,
+  #XferControl,
+  #QuickXfer,
+  #CustomXfer,
   #WebFormSpan,
   #WebFormSpanTwo,
   #WebFormSpanThree {
-
     width:         var(--btn-w) !important;
     height:        var(--btn-h) !important;
     margin-bottom: 3px !important;
@@ -2101,7 +1802,8 @@ input[type="radio"] {
   }
 
   body { font-size: 13px !important; }
-@@ -1467,75 +1807,104 @@ input[type="radio"] {
+
+  #Header font,
   #Header .body_text { font-size: 12px !important; }
 
   #MainStatuSSpan {
@@ -2148,7 +1850,6 @@ input[type="radio"] {
     padding:    5px 8px !important;
   }
   #NexTCalLPausE font,
-
   #NexTCalLPausE a { font-size: 11px !important; }
 
   #SendDTMF > a  { width: 82px !important; height: var(--btn-h) !important; font-size: 11px !important; }
@@ -2159,9 +1860,6 @@ input[type="radio"] {
 
   #RecorDingFilename,
   #RecorDID { width: var(--btn-w) !important; font-size: 10px !important; }
-
-
-
 
   /* Typography scale-up */
   .body_text   { font-size: 13px !important; }
