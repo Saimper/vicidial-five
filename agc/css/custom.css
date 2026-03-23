@@ -850,6 +850,193 @@ textarea.chat_box:focus {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
+   SECTION 12B — FORM LAYOUT & ALIGNMENT
+   Improves table-based form layout across all form containers:
+     #MainPanelCustInfo  — customer info form (6-col nested table)
+     #NeWManuaLDiaLBox   — manual dial form
+     #SearcHForMDisplaYBox — lead search form
+     #SearcHContactsDisplaYBox — contacts search form
+   Goals: consistent row spacing, label/input alignment, modern inputs.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Row spacing via border-spacing on inner form tables ── */
+#MainPanelCustInfo table table,
+#NeWManuaLDiaLBox table table,
+#SearcHForMDisplaYBox table,
+#SearcHContactsDisplaYBox table {
+  border-collapse: separate !important;
+  border-spacing:  0 2px !important;
+}
+
+/* ── Label cells (right-aligned) — consistent padding, no wrapping ── */
+#MainPanelCustInfo td[align="right"],
+#NeWManuaLDiaLBox td[align="right"],
+#SearcHForMDisplaYBox td[align="right"],
+#SearcHContactsDisplaYBox td[align="right"] {
+  padding:        3px 8px 3px 4px !important;
+  white-space:    nowrap !important;
+  vertical-align: middle !important;
+}
+
+#MainPanelCustInfo td[align="right"] font,
+#NeWManuaLDiaLBox td[align="right"] font,
+#SearcHForMDisplaYBox td[align="right"] font,
+#SearcHContactsDisplaYBox td[align="right"] font {
+  font-family: var(--font) !important;
+  font-size:   var(--in-fs) !important;
+  font-weight: 500 !important;
+  color:       var(--tx-2) !important;
+}
+
+/* ── Input cells (left-aligned) ── */
+#MainPanelCustInfo td[align="left"],
+#NeWManuaLDiaLBox td[align="left"],
+#SearcHForMDisplaYBox td[align="left"],
+#SearcHContactsDisplaYBox td[align="left"] {
+  padding:        3px 4px 3px 0 !important;
+  vertical-align: middle !important;
+}
+
+/* ── Search / Contacts form inputs (no .cust_form class on these) ── */
+#SearcHForMDisplaYBox input[type="text"],
+#SearcHContactsDisplaYBox input[type="text"] {
+  font-family:    var(--font) !important;
+  font-size:      var(--in-fs) !important;
+  height:         var(--in-h) !important;
+  padding:        0 var(--in-px) !important;
+  border:         1px solid var(--bd) !important;
+  border-radius:  var(--in-r) !important;
+  background:     var(--surface) !important;
+  color:          var(--tx-1) !important;
+  vertical-align: middle !important;
+  transition:     border-color .15s, box-shadow .15s !important;
+  outline:        none !important;
+  box-sizing:     border-box !important;
+}
+#SearcHForMDisplaYBox input[type="text"]:focus,
+#SearcHContactsDisplaYBox input[type="text"]:focus {
+  border-color: var(--bd-focus) !important;
+  box-shadow:   0 0 0 3px var(--ring) !important;
+}
+
+/* ── Checkboxes inside search form ── */
+#SearcHForMDisplaYBox input[type="checkbox"] {
+  accent-color:   var(--bd-focus) !important;
+  vertical-align: middle !important;
+  margin-right:   3px !important;
+}
+
+/* ── Max-width safety: prevent input overflow from 550px table ── */
+#MainPanelCustInfo input.cust_form,
+#MainPanelCustInfo select.cust_form {
+  max-width: 100% !important;
+}
+
+/* ── Wide fields: full available width ── */
+#address1, #address2, #address3 {
+  width:     100% !important;
+  max-width: 480px !important;
+}
+#comments, #call_notes, #other_tab_comments {
+  width:     100% !important;
+  max-width: 520px !important;
+}
+
+/* ── Modal form container backgrounds (replace legacy green) ── */
+#NeWManuaLDiaLBox > table,
+#SearcHForMDisplaYBox > table,
+#SearcHContactsDisplaYBox > table,
+#SearcHResultSDisplaYBox > table,
+#CalLNotesDisplaYBox > table {
+  background: var(--surface) !important;
+}
+#NeWManuaLDiaLBox > table > tbody > tr > td,
+#SearcHForMDisplaYBox > table > tbody > tr > td,
+#SearcHContactsDisplaYBox > table > tbody > tr > td,
+#SearcHResultSDisplaYBox > table > tbody > tr > td,
+#CalLNotesDisplaYBox > table > tbody > tr > td {
+  background: var(--surface) !important;
+}
+
+/* ── Form titles inside modal dialogs ── */
+#NeWManuaLDiaLBox .sd_text,
+#SearcHForMDisplaYBox .sd_text,
+#SearcHContactsDisplaYBox .sd_text,
+#SearcHResultSDisplaYBox .sd_text,
+#CalLNotesDisplaYBox .sd_text {
+  color:       var(--tx-1) !important;
+  font-family: var(--font) !important;
+}
+#NeWManuaLDiaLBox .sh_text,
+#SearcHForMDisplaYBox .sh_text,
+#SearcHContactsDisplaYBox .sh_text {
+  color:       var(--tx-2) !important;
+  font-family: var(--font) !important;
+  font-weight: 500 !important;
+}
+
+/* ── Action links styled as buttons (search/manual dial forms use <a>) ── */
+#NeWManuaLDiaLBox > table a[onclick],
+#SearcHForMDisplaYBox td[align="center"] a[onclick],
+#SearcHContactsDisplaYBox td[align="center"] a[onclick] {
+  display:          inline-flex !important;
+  align-items:      center !important;
+  justify-content:  center !important;
+  min-width:        100px !important;
+  height:           30px !important;
+  padding:          0 16px !important;
+  border-radius:    var(--btn-r) !important;
+  background:       var(--btn-primary) !important;
+  color:            #FFFFFF !important;
+  font-family:      var(--font) !important;
+  font-size:        11px !important;
+  font-weight:      600 !important;
+  letter-spacing:   .3px !important;
+  text-transform:   uppercase !important;
+  text-decoration:  none !important;
+  cursor:           pointer !important;
+  transition:       filter .14s, transform .08s !important;
+  margin:           4px 6px !important;
+}
+#NeWManuaLDiaLBox > table a[onclick]:hover,
+#SearcHForMDisplaYBox td[align="center"] a[onclick]:hover,
+#SearcHContactsDisplaYBox td[align="center"] a[onclick]:hover {
+  filter: brightness(.88) !important;
+}
+#NeWManuaLDiaLBox > table a[onclick]:active,
+#SearcHForMDisplaYBox td[align="center"] a[onclick]:active,
+#SearcHContactsDisplaYBox td[align="center"] a[onclick]:active {
+  transform: scale(.97) !important;
+}
+
+/* ── Search results panel ── */
+#SearcHResultSDisplaYBox .sh_text a {
+  color:           var(--blue) !important;
+  font-family:     var(--font) !important;
+  text-decoration: none !important;
+}
+#SearcHResultSDisplaYBox .sh_text a:hover {
+  text-decoration: underline !important;
+}
+#SearcHResultSDisplaYBox .scroll_calllog,
+#CalLNotesDisplaYBox .scroll_calllog {
+  border:        1px solid var(--bd) !important;
+  border-radius: var(--in-r) !important;
+  background:    var(--surface) !important;
+  font-family:   var(--font) !important;
+  font-size:     11px !important;
+  color:         var(--tx-1) !important;
+  padding:       6px !important;
+}
+
+/* ── Customer info section header row (colspan cells) — enhance ── */
+#MainPanelCustInfo tr td[colspan] font.body_text {
+  font-weight:    600 !important;
+  color:          var(--tx-1) !important;
+  letter-spacing: .3px !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
    SECTION 13 — CONTENT AREA (center column)
    ══════════════════════════════════════════════════════════════════════════════ */
 #MainTable > tbody > tr > td:nth-child(2) {
